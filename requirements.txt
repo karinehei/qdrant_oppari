@@ -1,0 +1,16 @@
+# Core dependencies
+qdrant-client>=1.7.0
+sentence-transformers>=2.2.0
+numpy>=1.24.0
+
+# LLM integration
+mistralai>=1.0.0
+python-dotenv>=1.0.0
+
+# Optional dependencies for hybrid search
+rank-bm25>=0.2.2
+
+# Development dependencies (optional)
+# pytest>=7.4.0
+# black>=23.0.0
+# mypy>=1.5.0
