@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-02-24T15:36:22Z",
+  "timestamp": "2026-02-24T18:14:04Z",
   "chunks_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/processed/chunks.jsonl",
   "collection_name": "rag_thesis_fi",
-  "indexed_count": 1358,
+  "indexed_count": 192,
   "skipped_count": 0,
   "total_loaded": 1358,
   "batch_size": 64,
   "num_batches": 22,
-  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
   "distance": "cosine",
   "hnsw_applied": false,
   "hnsw_m": null,
   "hnsw_ef_construct": null,
-  "duration_seconds": 3.78
+  "duration_seconds": 1.29
 }
