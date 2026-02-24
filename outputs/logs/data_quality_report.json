@@ -1,0 +1,117 @@
+{
+  "document_count": 10,
+  "chunk_count": 1358,
+  "empty_document_count": 0,
+  "empty_document_ids": [],
+  "short_document_count": 0,
+  "short_documents": [],
+  "document_count_zero_chunks": 0,
+  "documents_zero_chunks": [],
+  "short_chunk_count": 0,
+  "short_chunks_sample": [],
+  "long_chunk_count": 0,
+  "long_chunks_sample": [],
+  "chunk_length_stats": {
+    "min": 105,
+    "max": 800,
+    "avg": 643.421207658321,
+    "median": 709.0
+  },
+  "duplicate_chunk_count": 0,
+  "redundant_chunks_estimate": 0,
+  "source_type_counts": {
+    "raw": 1358
+  },
+  "year_counts": {
+    "null": 1358
+  },
+  "orphan_chunk_doc_ids": [],
+  "top_suspicious_lines": [
+    {
+      "line": "networks:",
+      "count": 12
+    },
+    {
+      "line": "- opencti-network",
+      "count": 11
+    },
+    {
+      "line": "Llama 3.2 Llama 3.3",
+      "count": 10
+    },
+    {
+      "line": "restart: always",
+      "count": 10
+    },
+    {
+      "line": "environment:",
+      "count": 9
+    },
+    {
+      "line": "Minimi toteutuu tai LLM vastauksesta käy ilmi,",
+      "count": 8
+    },
+    {
+      "line": "Kysymys Ajo RAG (ms) LLM (ms) Total (ms) Vastauksen laatu",
+      "count": 8
+    },
+    {
+      "line": "Tiivistelmä",
+      "count": 7
+    },
+    {
+      "line": "Sisällys",
+      "count": 6
+    },
+    {
+      "line": "UPDATE asiakkaat SET maa = 'Norja' WHERE asiakasnumero = 99;",
+      "count": 6
+    },
+    {
+      "line": "SELECT * FROM asiakkaat ORDER BY asiakasnumero",
+      "count": 6
+    },
+    {
+      "line": "volumes:",
+      "count": 6
+    },
+    {
+      "line": "opencti:",
+      "count": 6
+    },
+    {
+      "line": "depends_on:",
+      "count": 6
+    },
+    {
+      "line": "except Exception as e:",
+      "count": 6
+    },
+    {
+      "line": "1 Johdanto",
+      "count": 5
+    },
+    {
+      "line": "Lähteet",
+      "count": 5
+    },
+    {
+      "line": "Liite 1",
+      "count": 5
+    },
+    {
+      "line": "healthcheck:",
+      "count": 5
+    },
+    {
+      "line": "condition: service_started",
+      "count": 5
+    }
+  ],
+  "suspicious_chunks_sample": [],
+  "parameters": {
+    "min_doc_chars": 500,
+    "min_chunk_chars": 100,
+    "max_chunk_chars": 960
+  }
+}

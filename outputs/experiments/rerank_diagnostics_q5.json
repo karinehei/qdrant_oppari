@@ -1,0 +1,127 @@
+{
+  "query_id": "q5",
+  "eval_level": "doc",
+  "gold_ids": [
+    "Antikainen_Jari"
+  ],
+  "initial_candidate_ids": [
+    "Antikainen_Jari",
+    "Majander_Pyry",
+    "Myller_Niskanen_Rytilahti",
+    "Virtanen_Lauri",
+    "Pulli_Samu",
+    "Sarkiniemi_Mikko",
+    "Martin_Joel",
+    "Rauten_Sami"
+  ],
+  "configs": {
+    "C0_baseline": {
+      "final_ids": [
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Myller_Niskanen_Rytilahti"
+      ],
+      "pre_rerank_ids": [
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Myller_Niskanen_Rytilahti",
+        "Myller_Niskanen_Rytilahti",
+        "Virtanen_Lauri",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Sarkiniemi_Mikko"
+      ],
+      "post_rerank_ids": null,
+      "overlap_with_gold": [
+        "Antikainen_Jari"
+      ]
+    },
+    "C1_mmr": {
+      "final_ids": [
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Myller_Niskanen_Rytilahti",
+        "Sarkiniemi_Mikko",
+        "Pulli_Samu"
+      ],
+      "pre_rerank_ids": [
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Myller_Niskanen_Rytilahti",
+        "Sarkiniemi_Mikko",
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Antikainen_Jari",
+        "Myller_Niskanen_Rytilahti",
+        "Antikainen_Jari"
+      ],
+      "post_rerank_ids": null,
+      "overlap_with_gold": [
+        "Antikainen_Jari"
+      ]
+    },
+    "C2_mmr_rerank": {
+      "final_ids": [
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Sarkiniemi_Mikko",
+        "Myller_Niskanen_Rytilahti"
+      ],
+      "pre_rerank_ids": [
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Myller_Niskanen_Rytilahti",
+        "Sarkiniemi_Mikko",
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Antikainen_Jari",
+        "Myller_Niskanen_Rytilahti",
+        "Antikainen_Jari"
+      ],
+      "post_rerank_ids": [
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Sarkiniemi_Mikko",
+        "Myller_Niskanen_Rytilahti"
+      ],
+      "overlap_with_gold": []
+    },
+    "C3_mmr_rerank_dedupe": {
+      "final_ids": [
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Sarkiniemi_Mikko",
+        "Myller_Niskanen_Rytilahti"
+      ],
+      "pre_rerank_ids": [
+        "Antikainen_Jari",
+        "Majander_Pyry",
+        "Myller_Niskanen_Rytilahti",
+        "Sarkiniemi_Mikko",
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Antikainen_Jari",
+        "Myller_Niskanen_Rytilahti",
+        "Antikainen_Jari"
+      ],
+      "post_rerank_ids": [
+        "Pulli_Samu",
+        "Myller_Niskanen_Rytilahti",
+        "Pulli_Samu",
+        "Sarkiniemi_Mikko",
+        "Myller_Niskanen_Rytilahti"
+      ],
+      "overlap_with_gold": []
+    }
+  }
+}

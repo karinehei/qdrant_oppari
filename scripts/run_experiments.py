@@ -1,0 +1,562 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Run Retrieval Experiments Script
+
+Runs ablation experiments (baseline, MMR, rerank, dedupe) on annotated queries.
+Computes recall@k, nDCG@k, latency; saves results for reporting.
+
+Usage:
+    python scripts/run_experiments.py --dry-run
+    python scripts/run_experiments.py --limit-queries 3
+    python scripts/run_experiments.py --debug-query-id q4
+    python scripts/run_experiments.py
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import logging
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+# Add project root to path
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+logger = logging.getLogger(__name__)
+
+# Ablation configs: C0=baseline, C1=+MMR, C2=+rerank, C3=+dedupe
+# eval uses doc-level (relevant_doc_ids) or chunk-level (relevant_chunk_ids) per --eval-level
+CONFIGS = {
+    "C0_baseline": {
+        "diversity": 0.0,
+        "use_rerank": False,
+        "skip_dedupe": True,
+    },
+    "C1_mmr": {
+        "diversity": 0.35,
+        "use_rerank": False,
+        "skip_dedupe": True,
+    },
+    "C2_mmr_rerank": {
+        "diversity": 0.35,
+        "use_rerank": True,
+        "skip_dedupe": True,
+    },
+    "C3_mmr_rerank_dedupe": {
+        "diversity": 0.35,
+        "use_rerank": True,
+        "skip_dedupe": False,
+        "dedupe_by_source": False,  # uid-based dedupe
+    },
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run retrieval ablation experiments"
+    )
+    parser.add_argument(
+        "--queries-path",
+        default="data/annotations/queries.jsonl",
+        help="Path to queries.jsonl",
+    )
+    parser.add_argument(
+        "--gold-path",
+        default="data/annotations/gold_annotations.jsonl",
+        help="Path to gold_annotations.jsonl",
+    )
+    parser.add_argument(
+        "--collection-name",
+        default="rag_thesis_fi",
+        help="Qdrant collection name (default: rag_thesis_fi)",
+    )
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        default=5,
+        help="Top-K results per query (default: 5)",
+    )
+    parser.add_argument(
+        "--initial-limit",
+        type=int,
+        default=20,
+        help="Initial retrieval limit for MMR (default: 20)",
+    )
+    parser.add_argument(
+        "--score-threshold",
+        type=float,
+        default=0.0,
+        help="Minimum similarity score (default: 0.0)",
+    )
+    parser.add_argument(
+        "--eval-level",
+        choices=["doc", "chunk"],
+        default="doc",
+        help="Eval level: doc=relevant_doc_ids, chunk=relevant_chunk_ids (default: doc)",
+    )
+    parser.add_argument(
+        "--limit-queries",
+        type=int,
+        default=None,
+        help="Limit number of queries (debug)",
+    )
+    parser.add_argument(
+        "--configs",
+        nargs="+",
+        default=None,
+        choices=list(CONFIGS.keys()),
+        metavar="CONFIG",
+        help="Run only these configs (default: all). E.g. --configs C0_baseline C1_mmr skips rerank.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate only, no Qdrant searches",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default="outputs/experiments",
+        help="Output directory (default: outputs/experiments)",
+    )
+    parser.add_argument(
+        "--qdrant-url",
+        default="http://localhost:6333",
+        help="Qdrant server URL (default: http://localhost:6333)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed for reproducibility (default: 42)",
+    )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Verbose logging",
+    )
+    parser.add_argument(
+        "--debug-query-id",
+        default=None,
+        metavar="QUERY_ID",
+        help="Enable rerank diagnostics for this query (e.g. q4). Saves to outputs/experiments/rerank_diagnostics_<id>.json",
+    )
+    return parser.parse_args()
+
+
+def resolve_path(p: str) -> Path:
+    path = Path(p)
+    if not path.is_absolute():
+        path = PROJECT_ROOT / path
+    return path
+
+
+def run_retrieval_config(
+    client: Any,
+    model: Any,
+    cross_encoder: Any | None,
+    query: str,
+    config: dict[str, Any],
+    top_k: int,
+    initial_limit: int,
+    score_threshold: float,
+    collection_name: str,
+    diagnostics: dict | None = None,
+    eval_level: str = "doc",
+) -> list[dict]:
+    """Adapter: run retrieval with given config. Returns list of hit dicts."""
+    from retrieval import search
+
+    kwargs: dict[str, Any] = {
+        "top_k": top_k,
+        "initial_limit": initial_limit,
+        "score_threshold": score_threshold,
+        "collection_name": collection_name,
+        "diversity": config.get("diversity", 0.35),
+        "skip_dedupe": config.get("skip_dedupe", False),
+        "diagnostics": diagnostics,
+        "eval_level": eval_level,
+    }
+    if config.get("dedupe_by_source") is not None:
+        kwargs["dedupe_by_source"] = config["dedupe_by_source"]
+    if config.get("use_rerank") and cross_encoder is not None:
+        kwargs["cross_encoder"] = cross_encoder
+    else:
+        kwargs["cross_encoder"] = None
+
+    return search(client, model, query, **kwargs)
+
+
+def _get_eval_id(r: dict, id_key: str | tuple[str, ...]) -> str | None:
+    """Extract eval ID from result. id_key: 'source' for doc, ('chunk_id','uid') for chunk."""
+    if isinstance(id_key, str):
+        return r.get(id_key)
+    for k in id_key:
+        v = r.get(k)
+        if v:
+            return v
+    return None
+
+
+def compute_recall_ndcg(
+    results: list[dict],
+    expected: set[str],
+    k: int,
+    id_key: str | tuple[str, ...],
+) -> tuple[float, float]:
+    """Compute recall@k and nDCG@k. id_key: 'source' for doc, ('chunk_id','uid') for chunk.
+    Recall@k = (# unique relevant IDs in top-k) / (# unique gold relevant IDs).
+    """
+    preds = [v for r in results if (v := _get_eval_id(r, id_key))]
+    rel = [1 if p in expected else 0 for p in preds]
+    # Unique relevant IDs in top-k (no duplicate counting)
+    unique_hits = len(set(p for p in preds[:k] if p in expected))
+    recall = unique_hits / len(expected) if expected else 0.0
+    # Pad rel to k for ndcg (missing positions = 0)
+    rel_padded = rel[:k] + [0] * max(0, k - len(rel))
+    from utils.metrics_relevance import ndcg_at_k
+    ndcg = ndcg_at_k(rel_padded, k)
+    return recall, ndcg
+
+
+def percentile_ms(times: list[float], p: float) -> float:
+    """Compute percentile from list of times in ms."""
+    if not times:
+        return 0.0
+    s = sorted(times)
+    if p <= 0:
+        return s[0]
+    if p >= 100:
+        return s[-1]
+    idx = (p / 100) * (len(s) - 1)
+    i = int(idx)
+    if i >= len(s) - 1:
+        return s[-1]
+    return s[i] + (idx - i) * (s[i + 1] - s[i])
+
+
+def run_experiments(args: argparse.Namespace) -> bool:
+    """Run experiments. Returns True if successful."""
+    queries_path = resolve_path(args.queries_path)
+    gold_path = resolve_path(args.gold_path)
+    out_dir = resolve_path(args.output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load queries + gold
+    from annotations import load_queries_with_gold
+
+    if not queries_path.exists():
+        logger.error("Queries file not found: %s", queries_path)
+        return False
+    if not gold_path.exists():
+        logger.error("Gold file not found: %s", gold_path)
+        return False
+
+    combined = load_queries_with_gold(queries_path, gold_path)
+    if not combined:
+        logger.error("No queries with gold found")
+        return False
+
+    # Set seed early for reproducibility
+    from reproducibility import set_global_seed, build_reproducibility_metadata, get_git_commit_hash
+
+    set_global_seed(args.seed)
+    git_hash = get_git_commit_hash()
+    git_short = (git_hash[:7] + "...") if git_hash and len(git_hash) > 7 else (git_hash or "n/a")
+
+    if args.limit_queries:
+        combined = combined[: args.limit_queries]
+        logger.info("Limited to %d queries", len(combined))
+
+    id_key: str | tuple[str, ...] = ("doc_id", "source") if args.eval_level == "doc" else ("chunk_id", "uid")
+    expected_key = "relevant_doc_ids" if args.eval_level == "doc" else "relevant_chunk_ids"
+
+    configs_to_run = {k: CONFIGS[k] for k in (args.configs or CONFIGS.keys())}
+
+    # Startup log summary
+    logger.info(
+        "Startup: seed=%d collection=%s qdrant_url=%s eval_level=%s query_count=%d configs=%s git=%s",
+        args.seed,
+        args.collection_name,
+        args.qdrant_url,
+        args.eval_level,
+        len(combined),
+        list(configs_to_run.keys()),
+        git_short,
+    )
+
+    if args.dry_run:
+        logger.info("DRY RUN: would run %d queries × %d configs", len(combined), len(configs_to_run))
+        for name, cfg in configs_to_run.items():
+            logger.info("  Config %s: diversity=%.2f, rerank=%s, skip_dedupe=%s",
+                        name, cfg.get("diversity", 0), cfg.get("use_rerank"),
+                        cfg.get("skip_dedupe"))
+        return True
+
+    # Load deps (imports can take 30–60 s on first run)
+    logger.info("Loading dependencies (qdrant-client, sentence-transformers)...")
+    try:
+        from qdrant_client import QdrantClient
+        from sentence_transformers import SentenceTransformer, CrossEncoder
+    except ImportError as e:
+        logger.error("Missing dependency: %s", e)
+        return False
+
+    from config import EMBED_MODEL, RERANK_MODEL
+
+    qdrant_url = args.qdrant_url
+    try:
+        logger.info("Connecting to Qdrant at %s...", qdrant_url)
+        client = QdrantClient(url=qdrant_url)
+        client.get_collections()
+        logger.info("Qdrant connected")
+    except Exception as e:
+        logger.error("Cannot connect to Qdrant: %s", e)
+        return False
+
+    try:
+        logger.info("Loading embedding model %s (may take a minute on first run)...", EMBED_MODEL)
+        model = SentenceTransformer(EMBED_MODEL)
+        needs_rerank = any(cfg.get("use_rerank") for cfg in configs_to_run.values())
+        if needs_rerank:
+            logger.info("Loading reranker %s...", RERANK_MODEL)
+            cross_encoder: Any = CrossEncoder(RERANK_MODEL)
+        else:
+            logger.info("Skipping reranker (no config uses it)")
+            cross_encoder = None
+    except Exception as e:
+        logger.error("Failed to load models: %s", e)
+        return False
+
+    # Run experiments
+    t0 = time.perf_counter()
+    all_hits: list[dict] = []
+    per_query_metrics: list[dict] = []
+    config_latencies: dict[str, list[float]] = {c: [] for c in configs_to_run}
+    chunk_warned = False
+
+    for qrow in combined:
+        qid = qrow["query_id"]
+        query_text = qrow["query_text"]
+        expected = set(qrow.get(expected_key) or [])
+        query_diagnostics: dict[str, dict] = {}
+
+        for config_name, config in configs_to_run.items():
+            diag = {} if (args.debug_query_id and qid == args.debug_query_id) else None
+            try:
+                t_start = time.perf_counter()
+                results = run_retrieval_config(
+                    client, model, cross_encoder,
+                    query_text, config,
+                    top_k=args.top_k,
+                    initial_limit=args.initial_limit,
+                    score_threshold=args.score_threshold,
+                    collection_name=args.collection_name,
+                    diagnostics=diag,
+                    eval_level=args.eval_level,
+                )
+                latency_ms = (time.perf_counter() - t_start) * 1000
+                config_latencies[config_name].append(latency_ms)
+
+                recall, ndcg = compute_recall_ndcg(
+                    results, expected, args.top_k, id_key
+                )
+                # Sanity check: recall must be in [0, 1]
+                _RECALL_EPS = 1e-6
+                if recall < 0 or recall > 1.0 + _RECALL_EPS:
+                    logger.warning(
+                        "recall@k out of range [0,1]: %.4f (query_id=%s config=%s)",
+                        recall, qid, config_name,
+                    )
+
+                per_query_metrics.append({
+                    "query_id": qid,
+                    "config_name": config_name,
+                    "recall_at_k": recall,
+                    "ndcg_at_k": ndcg,
+                    "latency_ms": round(latency_ms, 2),
+                    "status": "ok",
+                })
+
+                if diag:
+                    query_diagnostics[config_name] = dict(diag)
+
+                for rank, r in enumerate(results, 1):
+                    all_hits.append({
+                        "query_id": qid,
+                        "config_name": config_name,
+                        "rank": rank,
+                        "doc_id": r.get("doc_id") or r.get("source"),
+                        "chunk_id": r.get("chunk_id") or r.get("uid"),
+                        "uid": r.get("uid"),
+                        "source": r.get("source"),
+                        "score": r.get("score"),
+                        "rerank_score": r.get("rerank_score"),
+                        "title": (r.get("title") or "")[:80],
+                    })
+
+                # Startup warning: chunk-level eval but no chunk identifiers in first result
+                if (
+                    not chunk_warned
+                    and args.eval_level == "chunk"
+                    and results
+                    and not any(r.get("chunk_id") or r.get("uid") for r in results)
+                ):
+                    logger.warning(
+                        "eval_level=chunk but first retrieval result has no chunk_id/uid; "
+                        "chunk-level metrics may be incorrect"
+                    )
+                    chunk_warned = True
+
+            except Exception as e:
+                logger.warning("Query %s config %s failed: %s", qid, config_name, e)
+                per_query_metrics.append({
+                    "query_id": qid,
+                    "config_name": config_name,
+                    "recall_at_k": None,
+                    "ndcg_at_k": None,
+                    "latency_ms": None,
+                    "status": "error",
+                    "error": str(e),
+                })
+
+        if args.debug_query_id and qid == args.debug_query_id and query_diagnostics:
+            gold_ids = list(expected)
+            full_diag: dict[str, Any] = {
+                "query_id": qid,
+                "eval_level": args.eval_level,
+                "gold_ids": gold_ids,
+                "initial_candidate_ids": next(
+                    (d["initial_candidate_ids"] for d in query_diagnostics.values() if "initial_candidate_ids" in d),
+                    [],
+                ),
+                "configs": {},
+            }
+            for c, d in query_diagnostics.items():
+                final_ids = d.get("final_ids", [])
+                overlap = list(set(final_ids) & expected)
+                full_diag["configs"][c] = {
+                    "final_ids": final_ids,
+                    "pre_rerank_ids": d.get("pre_rerank_ids"),
+                    "post_rerank_ids": d.get("post_rerank_ids"),
+                    "overlap_with_gold": overlap,
+                }
+            diag_path = out_dir / f"rerank_diagnostics_{qid}.json"
+            with open(diag_path, "w", encoding="utf-8") as f:
+                json.dump(full_diag, f, indent=2, ensure_ascii=False)
+            logger.info("Rerank diagnostics saved to %s", diag_path)
+
+    duration = time.perf_counter() - t0
+
+    # Write retrieval_hits.csv
+    hits_path = out_dir / "retrieval_hits.csv"
+    if all_hits:
+        with open(hits_path, "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=[
+                "query_id", "config_name", "rank", "doc_id", "chunk_id", "uid",
+                "source", "score", "rerank_score", "title"
+            ])
+            w.writeheader()
+            w.writerows(all_hits)
+
+    # Write per_query_metrics.csv
+    metrics_path = out_dir / "per_query_metrics.csv"
+    with open(metrics_path, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=[
+            "query_id", "config_name", "recall_at_k", "ndcg_at_k",
+            "latency_ms", "status", "error"
+        ])
+        w.writeheader()
+        w.writerows(per_query_metrics)
+
+    # Compute and write metrics_summary.csv
+    summary_rows: list[dict] = []
+    for config_name, latencies in config_latencies.items():  # config_latencies keys = configs_to_run
+        rows = [p for p in per_query_metrics if p["config_name"] == config_name and p["status"] == "ok"]
+        recalls = [r["recall_at_k"] for r in rows if r["recall_at_k"] is not None]
+        ndcgs = [r["ndcg_at_k"] for r in rows if r["ndcg_at_k"] is not None]
+        mean_recall = sum(recalls) / len(recalls) if recalls else 0
+        mean_ndcg = sum(ndcgs) / len(ndcgs) if ndcgs else 0
+        p50 = percentile_ms(latencies, 50) if latencies else 0
+        p95 = percentile_ms(latencies, 95) if latencies else 0
+        p99 = percentile_ms(latencies, 99) if latencies else 0
+        summary_rows.append({
+            "config_name": config_name,
+            "query_count": len(rows),
+            "mean_recall_at_k": round(mean_recall, 4),
+            "mean_ndcg_at_k": round(mean_ndcg, 4),
+            "p50_latency_ms": round(p50, 2),
+            "p95_latency_ms": round(p95, 2),
+            "p99_latency_ms": round(p99, 2),
+        })
+
+    summary_path = out_dir / "metrics_summary.csv"
+    with open(summary_path, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=[
+            "config_name", "query_count", "mean_recall_at_k", "mean_ndcg_at_k",
+            "p50_latency_ms", "p95_latency_ms", "p99_latency_ms"
+        ])
+        w.writeheader()
+        w.writerows(summary_rows)
+
+    # Write run_metadata.json
+    repro_meta = build_reproducibility_metadata(seed=args.seed)
+    metadata = {
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "seed": args.seed,
+        "git_commit_hash": repro_meta.get("git_commit_hash"),
+        "git_branch": repro_meta.get("git_branch"),
+        "environment_info": repro_meta.get("environment_info"),
+        "collection_name": args.collection_name,
+        "qdrant_url": args.qdrant_url,
+        "top_k": args.top_k,
+        "initial_limit": args.initial_limit,
+        "score_threshold": args.score_threshold,
+        "eval_level": args.eval_level,
+        "configs_run": list(configs_to_run.keys()),
+        "queries_path": str(queries_path),
+        "gold_path": str(gold_path),
+        "query_count": len(combined),
+        "duration_seconds": round(duration, 2),
+    }
+    with open(out_dir / "run_metadata.json", "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+    # Console summary
+    print("\n" + "=" * 60)
+    print("EXPERIMENT SUMMARY")
+    print("=" * 60)
+    for row in summary_rows:
+        print(f"\n{row['config_name']}:")
+        print(f"  mean recall@k: {row['mean_recall_at_k']:.4f}")
+        print(f"  mean nDCG@k:  {row['mean_ndcg_at_k']:.4f}")
+        print(f"  p50/p95/p99:  {row['p50_latency_ms']:.1f} / {row['p95_latency_ms']:.1f} / {row['p99_latency_ms']:.1f} ms")
+    print("\n" + "=" * 60)
+    print(f"Output: {out_dir}")
+
+    return True
+
+
+def main() -> None:
+    args = parse_args()
+    log_level = logging.DEBUG if args.verbose else logging.INFO
+    logging.basicConfig(
+        level=log_level,
+        format="%(asctime)s %(levelname)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+    ok = run_experiments(args)
+    sys.exit(0 if ok else 1)
+
+
+if __name__ == "__main__":
+    main()

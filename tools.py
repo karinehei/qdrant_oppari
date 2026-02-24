@@ -187,13 +187,14 @@ def semantic_search(
     if must:
         q_filter = Filter(must=must)
 
-    hits = client.search(
+    response = client.query_points(
         collection_name=COLLECTION,
-        query_vector=q_vec,
+        query=q_vec,
         limit=top_k,
         search_params=SearchParams(hnsw_ef=hnsw_ef),
-        query_filter=q_filter
+        query_filter=q_filter,
     )
+    hits = response.points
     return [{
         "score": float(h.score),
         "title": h.payload.get("title"),
@@ -221,12 +222,13 @@ def hybrid_search(
 ) -> List[Dict[str, Any]]:
     """Lightweight hybrid: combines vector and BM25 scores (weighted sum)."""
     q_vec = model.encode([question], normalize_embeddings=True).tolist()[0]
-    vec_hits = client.search(
+    response = client.query_points(
         collection_name=COLLECTION,
-        query_vector=q_vec,
+        query=q_vec,
         limit=vec_top_k,
         search_params=SearchParams(hnsw_ef=256),
     )
+    vec_hits = response.points
     if not vec_hits:
         return []
 

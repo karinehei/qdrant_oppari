@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment and secrets
+.env
+.env.local
+*.pem
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Model and cache
+.cache/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Outputs (optional: remove if you want to track experiments)
+# outputs/experiments/
+# outputs/logs/
+
+# Data (optional: uncomment if raw data should not be committed)
+# data/raw/
+# data/processed/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Qdrant local storage (if used)
+qdrant_storage/

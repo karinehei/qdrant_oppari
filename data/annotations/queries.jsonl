@@ -1,0 +1,30 @@
+{"query_id": "q1", "query_text": "Mitä on RAG-järjestelmä ja miten se toimii?", "category": "RAG_perusteet", "language": "fi"}
+{"query_id": "q2", "query_text": "Miten vektoritietokanta toimii semanttisessa haussa?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q3", "query_text": "Mitä hyötyä on hybridihakusta verrattuna pelkkään semanttiseen hakuun?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q4", "query_text": "Mitkä ovat paikallisen RAG-järjestelmän edut pilvipalveluihin verrattuna?", "category": "RAG_perusteet", "language": "fi"}
+{"query_id": "q5", "query_text": "Mitä teknologioita Antikaisen työssä käytettiin RAG-toteutuksessa?", "category": "toteutus", "language": "fi"}
+{"query_id": "q6", "query_text": "Miten cross-encoder parantaa hakutulosten relevanssia?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q7", "query_text": "Mitä haasteita suurilla kielimalleilla on?", "category": "LLM", "language": "fi"}
+{"query_id": "q8", "query_text": "Mitä on naiivi RAG ja miten se eroaa edistyneistä ratkaisuista?", "category": "RAG_perusteet", "language": "fi"}
+{"query_id": "q9", "query_text": "Miten dokumentit pilkotaan ja indeksoidaan RAG-järjestelmässä?", "category": "toteutus", "language": "fi"}
+{"query_id": "q10", "query_text": "Mitä tietoturvaetuja paikallisella kielimallilla on?", "category": "RAG_perusteet", "language": "fi"}
+{"query_id": "q11", "query_text": "Mitä on MMR ja miten se parantaa hakutulosten monipuolisuutta?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q12", "query_text": "Miten Ollama mahdollistaa paikallisten kielimallien käytön?", "category": "toteutus", "language": "fi"}
+{"query_id": "q13", "query_text": "Mitä eroa on bi-encoderilla ja cross-encoderilla rerankauksessa?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q14", "query_text": "Miten tietokantarakennetta voidaan opettaa LLM:lle RAG-menetelmällä?", "category": "toteutus", "language": "fi"}
+{"query_id": "q15", "query_text": "Mitä hyötyä on kyberuhkatiedon hakujärjestelmästä RAG-pohjaisena?", "category": "sovellus", "language": "fi"}
+{"query_id": "q16", "query_text": "Miten chatbot voi tukea erityisopiskelijoiden oppimista?", "category": "sovellus", "language": "fi"}
+{"query_id": "q17", "query_text": "Mitä tietoturvaetuja on itseoppiville kielimalleille suunnatussa koulutusympäristössä?", "category": "toteutus", "language": "fi"}
+{"query_id": "q18", "query_text": "Miten RAG-dokumenttihaku toimii pelinkehityksessä?", "category": "sovellus", "language": "fi"}
+{"query_id": "q19", "query_text": "Mitä on tekoälymuistiinpanosovellus ja miten se perustuu RAG:iin?", "category": "sovellus", "language": "fi"}
+{"query_id": "q20", "query_text": "Miten generatiivinen tekoäly tukee opinnäytetyöprosessia?", "category": "sovellus", "language": "fi"}
+{"query_id": "q21", "query_text": "Mitä ovat LangChain ja Chroma RAG-toteutuksessa?", "category": "toteutus", "language": "fi"}
+{"query_id": "q22", "query_text": "Miten dokumenttien chunking vaikuttaa hakutarkkuuteen?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q23", "query_text": "Mitä haasteita on organisaatiokohtaisen tietopohjan chatbotissa?", "category": "sovellus", "language": "fi"}
+{"query_id": "q24", "query_text": "Miten vektoritietokanta eroaa perinteisestä tietokannasta?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q25", "query_text": "Mitä hyötyä on monikyselyhausta RAG-järjestelmässä?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q26", "query_text": "Miten Streamlit soveltuu RAG-käyttöliittymän toteutukseen?", "category": "toteutus", "language": "fi"}
+{"query_id": "q27", "query_text": "Mitä ovat Llama 3.2 ja bge-m3 RAG-kontekstissa?", "category": "toteutus", "language": "fi"}
+{"query_id": "q28", "query_text": "Miten RAG vähentää kielimallin hallusinaatioita?", "category": "RAG_perusteet", "language": "fi"}
+{"query_id": "q29", "query_text": "Mitä on semanttinen haku ja miten se toimii?", "category": "tekniikka", "language": "fi"}
+{"query_id": "q30", "query_text": "Miten RAG-järjestelmä hyödyntää organisaation omia dokumentteja?", "category": "RAG_perusteet", "language": "fi"}

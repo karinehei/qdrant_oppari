@@ -1,0 +1,3 @@
+config_name,prompt_variant,groundedness_score,answer_count
+C0_baseline,default,0.85,10
+C2_mmr_rerank,default,0.92,10

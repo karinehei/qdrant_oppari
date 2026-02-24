@@ -1,0 +1,30 @@
+{"query_id": "q1", "relevant_doc_ids": ["Antikainen_Jari", "Holopainen_Petri"], "relevant_chunk_ids": ["Antikainen_Jari#1", "Antikainen_Jari#2", "Holopainen_Petri#0"], "notes": "RAG:n määrittely ja toimintaperiaate"}
+{"query_id": "q2", "relevant_doc_ids": ["Antikainen_Jari", "Holopainen_Petri"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Holopainen_Petri#1"], "notes": "Vektoritietokanta ja semanttinen haku"}
+{"query_id": "q3", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Antikainen_Jari#3"], "notes": "Hybridihaku vs semanttinen"}
+{"query_id": "q4", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#1", "Antikainen_Jari#4"], "notes": "Paikallisen RAG:n edut"}
+{"query_id": "q5", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Antikainen_Jari#6"], "notes": "LangChain, Ollama, Chroma"}
+{"query_id": "q6", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2"], "notes": "Cross-encoder reranking"}
+{"query_id": "q7", "relevant_doc_ids": ["Antikainen_Jari", "Holopainen_Petri"], "relevant_chunk_ids": [], "notes": "LLM-haasteet useissa dokumenteissa"}
+{"query_id": "q8", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#8"], "notes": "Naiivi vs edistynyt RAG"}
+{"query_id": "q9", "relevant_doc_ids": ["Antikainen_Jari", "Holopainen_Petri"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Holopainen_Petri#0"], "notes": "Chunking ja indeksointi"}
+{"query_id": "q10", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#1", "Antikainen_Jari#4"], "notes": "Tietoturva ja paikallinen ajo"}
+{"query_id": "q11", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Antikainen_Jari#3"], "notes": "MMR ja monipuolisuus"}
+{"query_id": "q12", "relevant_doc_ids": ["Martin_Joel","Antikainen_Jari"], "relevant_chunk_ids": ["Martin_Joel#85", "Antikainen_Jari#2"], "notes": "Ollama ja paikallinen ajo"}
+{"query_id": "q13", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Antikainen_Jari#6"], "notes": "Cross-encoder reranking"}
+{"query_id": "q14", "relevant_doc_ids": ["Holopainen_Petri"], "relevant_chunk_ids": ["Holopainen_Petri#0", "Holopainen_Petri#1"], "notes": "Tietokantarakenteen opettaminen"}
+{"query_id": "q15", "relevant_doc_ids": ["Rauten_Sami"], "relevant_chunk_ids": ["Rauten_Sami#0", "Rauten_Sami#1"], "notes": "Kyberuhkatiedon haku"}
+{"query_id": "q16", "relevant_doc_ids": ["Sarkiniemi_Mikko"], "relevant_chunk_ids": ["Sarkiniemi_Mikko#0", "Sarkiniemi_Mikko#1"], "notes": "Chatbot erityisopiskelijoille"}
+{"query_id": "q17", "relevant_doc_ids": ["Vilpo_Mika"], "relevant_chunk_ids": ["Vilpo_Mika#0", "Vilpo_Mika#1"], "notes": "Tietoturvallinen koulutusympäristö"}
+{"query_id": "q18", "relevant_doc_ids": ["Pulli_Samu"], "relevant_chunk_ids": ["Pulli_Samu#0", "Pulli_Samu#1"], "notes": "RAG pelinkehityksessä"}
+{"query_id": "q19", "relevant_doc_ids": ["Majander_Pyry"], "relevant_chunk_ids": ["Majander_Pyry#0", "Majander_Pyry#1"], "notes": "Tekoälymuistiinpanosovellus"}
+{"query_id": "q20", "relevant_doc_ids": ["Myller_Niskanen_Rytilahti"], "relevant_chunk_ids": ["Myller_Niskanen_Rytilahti#0", "Myller_Niskanen_Rytilahti#1"], "notes": "Generatiivinen tekoäly opinnäytetyössä"}
+{"query_id": "q21", "relevant_doc_ids": ["Antikainen_Jari","Martin_Joel"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Martin_Joel#0"], "notes": "LangChain ja Chroma"}
+{"query_id": "q22", "relevant_doc_ids": ["Antikainen_Jari","Holopainen_Petri"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Holopainen_Petri#0"], "notes": "Chunking ja indeksointi"}
+{"query_id": "q23", "relevant_doc_ids": ["Virtanen_Lauri"], "relevant_chunk_ids": ["Virtanen_Lauri#0", "Virtanen_Lauri#1"], "notes": "Organisaatiokohtainen chatbot"}
+{"query_id": "q24", "relevant_doc_ids": ["Antikainen_Jari","Holopainen_Petri"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Holopainen_Petri#1"], "notes": "Vektoritietokanta"}
+{"query_id": "q25", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Antikainen_Jari#8"], "notes": "Monikyselyhaku"}
+{"query_id": "q26", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Antikainen_Jari#9"], "notes": "Streamlit käyttöliittymä"}
+{"query_id": "q27", "relevant_doc_ids": ["Antikainen_Jari","Martin_Joel"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Martin_Joel#85"], "notes": "Llama 3.2 ja bge-m3"}
+{"query_id": "q28", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#1", "Antikainen_Jari#11"], "notes": "RAG ja hallusinaatiot"}
+{"query_id": "q29", "relevant_doc_ids": ["Antikainen_Jari","Holopainen_Petri"], "relevant_chunk_ids": ["Antikainen_Jari#2", "Holopainen_Petri#1"], "notes": "Semanttinen haku"}
+{"query_id": "q30", "relevant_doc_ids": ["Antikainen_Jari"], "relevant_chunk_ids": ["Antikainen_Jari#1", "Antikainen_Jari#13"], "notes": "Organisaation omat dokumentit"}

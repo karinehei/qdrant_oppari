@@ -1,0 +1,121 @@
+query_id,config_name,rank,doc_id,chunk_id,uid,source,score,rerank_score,title
+q1,C0_baseline,1,Martin_Joel,Martin_Joel#58,Martin_Joel#58,Martin_Joel,0.552,,Martin Joel
+q1,C0_baseline,2,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.551,,Pulli Samu
+q1,C0_baseline,3,Sarkiniemi_Mikko,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko,0.54,,Sarkiniemi Mikko
+q1,C0_baseline,4,Rauten_Sami,Rauten_Sami#114,Rauten_Sami#114,Rauten_Sami,0.516,,Rauten Sami
+q1,C0_baseline,5,Antikainen_Jari,Antikainen_Jari#44,Antikainen_Jari#44,Antikainen_Jari,0.507,,Antikainen Jari
+q1,C1_mmr,1,Martin_Joel,Martin_Joel#58,Martin_Joel#58,Martin_Joel,0.552,,Martin Joel
+q1,C1_mmr,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#6,Myller_Niskanen_Rytilahti#6,Myller_Niskanen_Rytilahti,0.487,,Myller Niskanen Rytilahti
+q1,C1_mmr,3,Sarkiniemi_Mikko,Sarkiniemi_Mikko#81,Sarkiniemi_Mikko#81,Sarkiniemi_Mikko,0.473,,Sarkiniemi Mikko
+q1,C1_mmr,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko,0.54,,Sarkiniemi Mikko
+q1,C1_mmr,5,Antikainen_Jari,Antikainen_Jari#89,Antikainen_Jari#89,Antikainen_Jari,0.487,,Antikainen Jari
+q1,C2_mmr_rerank,1,Antikainen_Jari,Antikainen_Jari#89,Antikainen_Jari#89,Antikainen_Jari,0.487,5.811977863311768,Antikainen Jari
+q1,C2_mmr_rerank,2,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.551,3.4845151901245117,Pulli Samu
+q1,C2_mmr_rerank,3,Antikainen_Jari,Antikainen_Jari#0,Antikainen_Jari#0,Antikainen_Jari,0.467,3.420681953430176,Antikainen Jari
+q1,C2_mmr_rerank,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#81,Sarkiniemi_Mikko#81,Sarkiniemi_Mikko,0.473,0.7543078660964966,Sarkiniemi Mikko
+q1,C2_mmr_rerank,5,Martin_Joel,Martin_Joel#58,Martin_Joel#58,Martin_Joel,0.552,0.6072191596031189,Martin Joel
+q1,C3_mmr_rerank_dedupe,1,Antikainen_Jari,Antikainen_Jari#89,Antikainen_Jari#89,Antikainen_Jari,0.487,5.811977863311768,Antikainen Jari
+q1,C3_mmr_rerank_dedupe,2,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.551,3.4845151901245117,Pulli Samu
+q1,C3_mmr_rerank_dedupe,3,Antikainen_Jari,Antikainen_Jari#0,Antikainen_Jari#0,Antikainen_Jari,0.467,3.420681953430176,Antikainen Jari
+q1,C3_mmr_rerank_dedupe,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#81,Sarkiniemi_Mikko#81,Sarkiniemi_Mikko,0.473,0.7543078660964966,Sarkiniemi Mikko
+q1,C3_mmr_rerank_dedupe,5,Martin_Joel,Martin_Joel#58,Martin_Joel#58,Martin_Joel,0.552,0.6072191596031189,Martin Joel
+q2,C0_baseline,1,Majander_Pyry,Majander_Pyry#105,Majander_Pyry#105,Majander_Pyry,0.678,,Majander Pyry
+q2,C0_baseline,2,Sarkiniemi_Mikko,Sarkiniemi_Mikko#99,Sarkiniemi_Mikko#99,Sarkiniemi_Mikko,0.557,,Sarkiniemi Mikko
+q2,C0_baseline,3,Pulli_Samu,Pulli_Samu#64,Pulli_Samu#64,Pulli_Samu,0.556,,Pulli Samu
+q2,C0_baseline,4,Rauten_Sami,Rauten_Sami#74,Rauten_Sami#74,Rauten_Sami,0.546,,Rauten Sami
+q2,C0_baseline,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#149,Myller_Niskanen_Rytilahti#149,Myller_Niskanen_Rytilahti,0.538,,Myller Niskanen Rytilahti
+q2,C1_mmr,1,Majander_Pyry,Majander_Pyry#105,Majander_Pyry#105,Majander_Pyry,0.678,,Majander Pyry
+q2,C1_mmr,2,Majander_Pyry,Majander_Pyry#179,Majander_Pyry#179,Majander_Pyry,0.518,,Majander Pyry
+q2,C1_mmr,3,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#152,Myller_Niskanen_Rytilahti#152,Myller_Niskanen_Rytilahti,0.519,,Myller Niskanen Rytilahti
+q2,C1_mmr,4,Pulli_Samu,Pulli_Samu#64,Pulli_Samu#64,Pulli_Samu,0.556,,Pulli Samu
+q2,C1_mmr,5,Rauten_Sami,Rauten_Sami#77,Rauten_Sami#77,Rauten_Sami,0.533,,Rauten Sami
+q2,C2_mmr_rerank,1,Majander_Pyry,Majander_Pyry#105,Majander_Pyry#105,Majander_Pyry,0.678,5.447841167449951,Majander Pyry
+q2,C2_mmr_rerank,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#152,Myller_Niskanen_Rytilahti#152,Myller_Niskanen_Rytilahti,0.519,2.7793846130371094,Myller Niskanen Rytilahti
+q2,C2_mmr_rerank,3,Rauten_Sami,Rauten_Sami#76,Rauten_Sami#76,Rauten_Sami,0.522,1.3188235759735107,Rauten Sami
+q2,C2_mmr_rerank,4,Pulli_Samu,Pulli_Samu#64,Pulli_Samu#64,Pulli_Samu,0.556,0.19685247540473938,Pulli Samu
+q2,C2_mmr_rerank,5,Rauten_Sami,Rauten_Sami#77,Rauten_Sami#77,Rauten_Sami,0.533,-0.7145767211914062,Rauten Sami
+q2,C3_mmr_rerank_dedupe,1,Majander_Pyry,Majander_Pyry#105,Majander_Pyry#105,Majander_Pyry,0.678,5.447841167449951,Majander Pyry
+q2,C3_mmr_rerank_dedupe,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#152,Myller_Niskanen_Rytilahti#152,Myller_Niskanen_Rytilahti,0.519,2.7793846130371094,Myller Niskanen Rytilahti
+q2,C3_mmr_rerank_dedupe,3,Rauten_Sami,Rauten_Sami#76,Rauten_Sami#76,Rauten_Sami,0.522,1.3188235759735107,Rauten Sami
+q2,C3_mmr_rerank_dedupe,4,Pulli_Samu,Pulli_Samu#64,Pulli_Samu#64,Pulli_Samu,0.556,0.19685247540473938,Pulli Samu
+q2,C3_mmr_rerank_dedupe,5,Rauten_Sami,Rauten_Sami#77,Rauten_Sami#77,Rauten_Sami,0.533,-0.7145767211914062,Rauten Sami
+q3,C0_baseline,1,Antikainen_Jari,Antikainen_Jari#97,Antikainen_Jari#97,Antikainen_Jari,0.702,,Antikainen Jari
+q3,C0_baseline,2,Antikainen_Jari,Antikainen_Jari#3,Antikainen_Jari#3,Antikainen_Jari,0.667,,Antikainen Jari
+q3,C0_baseline,3,Antikainen_Jari,Antikainen_Jari#72,Antikainen_Jari#72,Antikainen_Jari,0.657,,Antikainen Jari
+q3,C0_baseline,4,Antikainen_Jari,Antikainen_Jari#102,Antikainen_Jari#102,Antikainen_Jari,0.62,,Antikainen Jari
+q3,C0_baseline,5,Rauten_Sami,Rauten_Sami#76,Rauten_Sami#76,Rauten_Sami,0.605,,Rauten Sami
+q3,C1_mmr,1,Antikainen_Jari,Antikainen_Jari#97,Antikainen_Jari#97,Antikainen_Jari,0.702,,Antikainen Jari
+q3,C1_mmr,2,Rauten_Sami,Rauten_Sami#0,Rauten_Sami#0,Rauten_Sami,0.589,,Rauten Sami
+q3,C1_mmr,3,Antikainen_Jari,Antikainen_Jari#3,Antikainen_Jari#3,Antikainen_Jari,0.667,,Antikainen Jari
+q3,C1_mmr,4,Antikainen_Jari,Antikainen_Jari#72,Antikainen_Jari#72,Antikainen_Jari,0.657,,Antikainen Jari
+q3,C1_mmr,5,Rauten_Sami,Rauten_Sami#77,Rauten_Sami#77,Rauten_Sami,0.547,,Rauten Sami
+q3,C2_mmr_rerank,1,Rauten_Sami,Rauten_Sami#76,Rauten_Sami#76,Rauten_Sami,0.605,2.2125797271728516,Rauten Sami
+q3,C2_mmr_rerank,2,Antikainen_Jari,Antikainen_Jari#72,Antikainen_Jari#72,Antikainen_Jari,0.657,2.0713906288146973,Antikainen Jari
+q3,C2_mmr_rerank,3,Antikainen_Jari,Antikainen_Jari#3,Antikainen_Jari#3,Antikainen_Jari,0.667,2.0667829513549805,Antikainen Jari
+q3,C2_mmr_rerank,4,Antikainen_Jari,Antikainen_Jari#97,Antikainen_Jari#97,Antikainen_Jari,0.702,1.7676327228546143,Antikainen Jari
+q3,C2_mmr_rerank,5,Antikainen_Jari,Antikainen_Jari#102,Antikainen_Jari#102,Antikainen_Jari,0.62,0.49791789054870605,Antikainen Jari
+q3,C3_mmr_rerank_dedupe,1,Rauten_Sami,Rauten_Sami#76,Rauten_Sami#76,Rauten_Sami,0.605,2.2125797271728516,Rauten Sami
+q3,C3_mmr_rerank_dedupe,2,Antikainen_Jari,Antikainen_Jari#72,Antikainen_Jari#72,Antikainen_Jari,0.657,2.0713906288146973,Antikainen Jari
+q3,C3_mmr_rerank_dedupe,3,Antikainen_Jari,Antikainen_Jari#3,Antikainen_Jari#3,Antikainen_Jari,0.667,2.0667829513549805,Antikainen Jari
+q3,C3_mmr_rerank_dedupe,4,Antikainen_Jari,Antikainen_Jari#97,Antikainen_Jari#97,Antikainen_Jari,0.702,1.7676327228546143,Antikainen Jari
+q3,C3_mmr_rerank_dedupe,5,Antikainen_Jari,Antikainen_Jari#102,Antikainen_Jari#102,Antikainen_Jari,0.62,0.49791789054870605,Antikainen Jari
+q4,C0_baseline,1,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.659,,Pulli Samu
+q4,C0_baseline,2,Holopainen_Petri,Holopainen_Petri#0,Holopainen_Petri#0,Holopainen_Petri,0.656,,Holopainen Petri
+q4,C0_baseline,3,Rauten_Sami,Rauten_Sami#0,Rauten_Sami#0,Rauten_Sami,0.652,,Rauten Sami
+q4,C0_baseline,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko,0.64,,Sarkiniemi Mikko
+q4,C0_baseline,5,Sarkiniemi_Mikko,Sarkiniemi_Mikko#139,Sarkiniemi_Mikko#139,Sarkiniemi_Mikko,0.636,,Sarkiniemi Mikko
+q4,C1_mmr,1,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.659,,Pulli Samu
+q4,C1_mmr,2,Holopainen_Petri,Holopainen_Petri#0,Holopainen_Petri#0,Holopainen_Petri,0.656,,Holopainen Petri
+q4,C1_mmr,3,Rauten_Sami,Rauten_Sami#90,Rauten_Sami#90,Rauten_Sami,0.603,,Rauten Sami
+q4,C1_mmr,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko#21,Sarkiniemi_Mikko,0.64,,Sarkiniemi Mikko
+q4,C1_mmr,5,Antikainen_Jari,Antikainen_Jari#108,Antikainen_Jari#108,Antikainen_Jari,0.62,,Antikainen Jari
+q4,C2_mmr_rerank,1,Rauten_Sami,Rauten_Sami#90,Rauten_Sami#90,Rauten_Sami,0.603,2.7227251529693604,Rauten Sami
+q4,C2_mmr_rerank,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#149,Myller_Niskanen_Rytilahti#149,Myller_Niskanen_Rytilahti,0.63,0.9269253611564636,Myller Niskanen Rytilahti
+q4,C2_mmr_rerank,3,Holopainen_Petri,Holopainen_Petri#0,Holopainen_Petri#0,Holopainen_Petri,0.656,-1.928732991218567,Holopainen Petri
+q4,C2_mmr_rerank,4,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.659,-2.2069458961486816,Pulli Samu
+q4,C2_mmr_rerank,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#48,Myller_Niskanen_Rytilahti#48,Myller_Niskanen_Rytilahti,0.621,-3.647892951965332,Myller Niskanen Rytilahti
+q4,C3_mmr_rerank_dedupe,1,Rauten_Sami,Rauten_Sami#90,Rauten_Sami#90,Rauten_Sami,0.603,2.7227251529693604,Rauten Sami
+q4,C3_mmr_rerank_dedupe,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#149,Myller_Niskanen_Rytilahti#149,Myller_Niskanen_Rytilahti,0.63,0.9269253611564636,Myller Niskanen Rytilahti
+q4,C3_mmr_rerank_dedupe,3,Holopainen_Petri,Holopainen_Petri#0,Holopainen_Petri#0,Holopainen_Petri,0.656,-1.928732991218567,Holopainen Petri
+q4,C3_mmr_rerank_dedupe,4,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.659,-2.2069458961486816,Pulli Samu
+q4,C3_mmr_rerank_dedupe,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#48,Myller_Niskanen_Rytilahti#48,Myller_Niskanen_Rytilahti,0.621,-3.647892951965332,Myller Niskanen Rytilahti
+q5,C0_baseline,1,Antikainen_Jari,Antikainen_Jari#0,Antikainen_Jari#0,Antikainen_Jari,0.646,,Antikainen Jari
+q5,C0_baseline,2,Majander_Pyry,Majander_Pyry#0,Majander_Pyry#0,Majander_Pyry,0.606,,Majander Pyry
+q5,C0_baseline,3,Antikainen_Jari,Antikainen_Jari#44,Antikainen_Jari#44,Antikainen_Jari,0.604,,Antikainen Jari
+q5,C0_baseline,4,Majander_Pyry,Majander_Pyry#5,Majander_Pyry#5,Majander_Pyry,0.59,,Majander Pyry
+q5,C0_baseline,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#3,Myller_Niskanen_Rytilahti#3,Myller_Niskanen_Rytilahti,0.589,,Myller Niskanen Rytilahti
+q5,C1_mmr,1,Antikainen_Jari,Antikainen_Jari#0,Antikainen_Jari#0,Antikainen_Jari,0.646,,Antikainen Jari
+q5,C1_mmr,2,Majander_Pyry,Majander_Pyry#0,Majander_Pyry#0,Majander_Pyry,0.606,,Majander Pyry
+q5,C1_mmr,3,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#0,Myller_Niskanen_Rytilahti#0,Myller_Niskanen_Rytilahti,0.579,,Myller Niskanen Rytilahti
+q5,C1_mmr,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#15,Sarkiniemi_Mikko#15,Sarkiniemi_Mikko,0.576,,Sarkiniemi Mikko
+q5,C1_mmr,5,Pulli_Samu,Pulli_Samu#33,Pulli_Samu#33,Pulli_Samu,0.57,,Pulli Samu
+q5,C2_mmr_rerank,1,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.579,5.789019584655762,Pulli Samu
+q5,C2_mmr_rerank,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#3,Myller_Niskanen_Rytilahti#3,Myller_Niskanen_Rytilahti,0.589,3.6750659942626953,Myller Niskanen Rytilahti
+q5,C2_mmr_rerank,3,Pulli_Samu,Pulli_Samu#33,Pulli_Samu#33,Pulli_Samu,0.57,2.4958460330963135,Pulli Samu
+q5,C2_mmr_rerank,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#15,Sarkiniemi_Mikko#15,Sarkiniemi_Mikko,0.576,2.208568811416626,Sarkiniemi Mikko
+q5,C2_mmr_rerank,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#163,Myller_Niskanen_Rytilahti#163,Myller_Niskanen_Rytilahti,0.577,2.203909397125244,Myller Niskanen Rytilahti
+q5,C3_mmr_rerank_dedupe,1,Pulli_Samu,Pulli_Samu#73,Pulli_Samu#73,Pulli_Samu,0.579,5.789019584655762,Pulli Samu
+q5,C3_mmr_rerank_dedupe,2,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#3,Myller_Niskanen_Rytilahti#3,Myller_Niskanen_Rytilahti,0.589,3.6750659942626953,Myller Niskanen Rytilahti
+q5,C3_mmr_rerank_dedupe,3,Pulli_Samu,Pulli_Samu#33,Pulli_Samu#33,Pulli_Samu,0.57,2.4958460330963135,Pulli Samu
+q5,C3_mmr_rerank_dedupe,4,Sarkiniemi_Mikko,Sarkiniemi_Mikko#15,Sarkiniemi_Mikko#15,Sarkiniemi_Mikko,0.576,2.208568811416626,Sarkiniemi Mikko
+q5,C3_mmr_rerank_dedupe,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#163,Myller_Niskanen_Rytilahti#163,Myller_Niskanen_Rytilahti,0.577,2.203909397125244,Myller Niskanen Rytilahti
+q6,C0_baseline,1,Antikainen_Jari,Antikainen_Jari#80,Antikainen_Jari#80,Antikainen_Jari,0.591,,Antikainen Jari
+q6,C0_baseline,2,Antikainen_Jari,Antikainen_Jari#79,Antikainen_Jari#79,Antikainen_Jari,0.564,,Antikainen Jari
+q6,C0_baseline,3,Virtanen_Lauri,Virtanen_Lauri#27,Virtanen_Lauri#27,Virtanen_Lauri,0.535,,Virtanen Lauri
+q6,C0_baseline,4,Antikainen_Jari,Antikainen_Jari#82,Antikainen_Jari#82,Antikainen_Jari,0.534,,Antikainen Jari
+q6,C0_baseline,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#101,Myller_Niskanen_Rytilahti#101,Myller_Niskanen_Rytilahti,0.485,,Myller Niskanen Rytilahti
+q6,C1_mmr,1,Antikainen_Jari,Antikainen_Jari#80,Antikainen_Jari#80,Antikainen_Jari,0.591,,Antikainen Jari
+q6,C1_mmr,2,Vilpo_Mika,Vilpo_Mika#111,Vilpo_Mika#111,Vilpo_Mika,0.434,,Vilpo Mika
+q6,C1_mmr,3,Antikainen_Jari,Antikainen_Jari#82,Antikainen_Jari#82,Antikainen_Jari,0.534,,Antikainen Jari
+q6,C1_mmr,4,Antikainen_Jari,Antikainen_Jari#79,Antikainen_Jari#79,Antikainen_Jari,0.564,,Antikainen Jari
+q6,C1_mmr,5,Virtanen_Lauri,Virtanen_Lauri#27,Virtanen_Lauri#27,Virtanen_Lauri,0.535,,Virtanen Lauri
+q6,C2_mmr_rerank,1,Antikainen_Jari,Antikainen_Jari#80,Antikainen_Jari#80,Antikainen_Jari,0.591,4.093492031097412,Antikainen Jari
+q6,C2_mmr_rerank,2,Antikainen_Jari,Antikainen_Jari#82,Antikainen_Jari#82,Antikainen_Jari,0.534,2.3980865478515625,Antikainen Jari
+q6,C2_mmr_rerank,3,Antikainen_Jari,Antikainen_Jari#79,Antikainen_Jari#79,Antikainen_Jari,0.564,1.0429104566574097,Antikainen Jari
+q6,C2_mmr_rerank,4,Virtanen_Lauri,Virtanen_Lauri#27,Virtanen_Lauri#27,Virtanen_Lauri,0.535,-2.8123416900634766,Virtanen Lauri
+q6,C2_mmr_rerank,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#101,Myller_Niskanen_Rytilahti#101,Myller_Niskanen_Rytilahti,0.485,-5.900662422180176,Myller Niskanen Rytilahti
+q6,C3_mmr_rerank_dedupe,1,Antikainen_Jari,Antikainen_Jari#80,Antikainen_Jari#80,Antikainen_Jari,0.591,4.093492031097412,Antikainen Jari
+q6,C3_mmr_rerank_dedupe,2,Antikainen_Jari,Antikainen_Jari#82,Antikainen_Jari#82,Antikainen_Jari,0.534,2.3980865478515625,Antikainen Jari
+q6,C3_mmr_rerank_dedupe,3,Antikainen_Jari,Antikainen_Jari#79,Antikainen_Jari#79,Antikainen_Jari,0.564,1.0429104566574097,Antikainen Jari
+q6,C3_mmr_rerank_dedupe,4,Virtanen_Lauri,Virtanen_Lauri#27,Virtanen_Lauri#27,Virtanen_Lauri,0.535,-2.8123416900634766,Virtanen Lauri
+q6,C3_mmr_rerank_dedupe,5,Myller_Niskanen_Rytilahti,Myller_Niskanen_Rytilahti#101,Myller_Niskanen_Rytilahti#101,Myller_Niskanen_Rytilahti,0.485,-5.900662422180176,Myller Niskanen Rytilahti

@@ -4,7 +4,7 @@ Indexing Module
 Handles Qdrant collection management and document indexing.
 """
 
-from typing import List, Dict
+from typing import List, Dict, Optional
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from sentence_transformers import SentenceTransformer
@@ -12,7 +12,7 @@ import uuid
 from config import COLLECTION, RESET
 
 
-def ensure_collection(client: QdrantClient, dim: int):
+def ensure_collection(client: QdrantClient, dim: int, collection_name: Optional[str] = None):
     """
     Ensure Qdrant collection exists, creating it if necessary.
     
@@ -27,17 +27,17 @@ def ensure_collection(client: QdrantClient, dim: int):
         Set RESET=True to delete and recreate collection. Set to False
         after first run to preserve existing data.
     """
-    # Kerran nollaus: aseta RESET=True ja aja; palaa False:ksi seuraavilla ajoilla
-    if RESET and client.collection_exists(COLLECTION):
-        client.delete_collection(COLLECTION)
-    if not client.collection_exists(COLLECTION):
+    coll = collection_name or COLLECTION
+    if RESET and client.collection_exists(coll):
+        client.delete_collection(coll)
+    if not client.collection_exists(coll):
         client.create_collection(
-            collection_name=COLLECTION,
+            collection_name=coll,
             vectors_config=VectorParams(size=dim, distance=Distance.COSINE),
         )
 
 
-def index(client: QdrantClient, model: SentenceTransformer, corpus: List[Dict]):
+def index(client: QdrantClient, model: SentenceTransformer, corpus: List[Dict], collection_name: Optional[str] = None):
     """
     Index corpus into Qdrant collection.
     
@@ -64,4 +64,5 @@ def index(client: QdrantClient, model: SentenceTransformer, corpus: List[Dict]):
                 payload={"uid": c["uid"], "title": c["title"], "text": c["text"], "source": c["source"]},
             )
         )
-    client.upsert(collection_name=COLLECTION, points=points)
+    coll = collection_name or COLLECTION
+    client.upsert(collection_name=coll, points=points)

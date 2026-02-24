@@ -1,0 +1,119 @@
+{
+  "timestamp": "2026-02-24T08:37:41.176192+00:00",
+  "raw_dir": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\data\\raw",
+  "document_count_loaded": 10,
+  "document_count_processed": 10,
+  "document_count_failed": 0,
+  "document_count_zero_chunks": 0,
+  "chunk_count_total": 1358,
+  "avg_chunk_length_chars": 643.421207658321,
+  "min_chunk_length_chars": 105,
+  "max_chunk_length_chars": 800,
+  "source_type_counts": {
+    "raw": 1358
+  },
+  "language_counts": {
+    "fi": 1358
+  },
+  "parameters": {
+    "max_len_chars": 800,
+    "overlap_chars": 120,
+    "strategy": "paragraph",
+    "min_chunk_chars": 100,
+    "limit_docs": null
+  },
+  "output_paths": {
+    "documents": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\data\\processed\\documents.jsonl",
+    "chunks": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\data\\processed\\chunks.jsonl",
+    "summary": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\outputs\\logs\\preprocess_summary.json"
+  },
+  "top_10_longest_documents": [
+    {
+      "id": "Majander_Pyry",
+      "length": 130478
+    },
+    {
+      "id": "Myller_Niskanen_Rytilahti",
+      "length": 120624
+    },
+    {
+      "id": "Rauten_Sami",
+      "length": 110062
+    },
+    {
+      "id": "Sarkiniemi_Mikko",
+      "length": 92905
+    },
+    {
+      "id": "Vilpo_Mika",
+      "length": 82617
+    },
+    {
+      "id": "Martin_Joel",
+      "length": 82325
+    },
+    {
+      "id": "Holopainen_Petri",
+      "length": 72835
+    },
+    {
+      "id": "Antikainen_Jari",
+      "length": 69556
+    },
+    {
+      "id": "Virtanen_Lauri",
+      "length": 52158
+    },
+    {
+      "id": "Pulli_Samu",
+      "length": 47885
+    }
+  ],
+  "top_10_shortest_documents": [
+    {
+      "id": "Majander_Pyry",
+      "length": 130478
+    },
+    {
+      "id": "Myller_Niskanen_Rytilahti",
+      "length": 120624
+    },
+    {
+      "id": "Rauten_Sami",
+      "length": 110062
+    },
+    {
+      "id": "Sarkiniemi_Mikko",
+      "length": 92905
+    },
+    {
+      "id": "Vilpo_Mika",
+      "length": 82617
+    },
+    {
+      "id": "Martin_Joel",
+      "length": 82325
+    },
+    {
+      "id": "Holopainen_Petri",
+      "length": 72835
+    },
+    {
+      "id": "Antikainen_Jari",
+      "length": 69556
+    },
+    {
+      "id": "Virtanen_Lauri",
+      "length": 52158
+    },
+    {
+      "id": "Pulli_Samu",
+      "length": 47885
+    }
+  ],
+  "duplicate_chunk_estimate": {
+    "unique_text_count": 1358,
+    "duplicate_text_groups": 0,
+    "redundant_chunks_estimate": 0
+  }
+}

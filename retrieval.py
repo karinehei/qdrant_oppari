@@ -170,6 +170,11 @@ def search(
     diversity: float = 0.35,   # maltillinen
     score_threshold: float = 0.25,
     cross_encoder: Optional[CrossEncoder] = None,
+    collection_name: Optional[str] = None,
+    dedupe_by_source: Optional[bool] = None,
+    skip_dedupe: bool = False,
+    diagnostics: Optional[dict] = None,
+    eval_level: str = "doc",
 ) -> List[Dict]:
     """
     Perform semantic search with MMR, optional reranking, and deduplication.
@@ -206,20 +211,33 @@ def search(
         >>> len(results) <= 5
         True
     """
+    coll = collection_name or COLLECTION
     # 1) Ensihaku Qdrantista (pyydä vektorit & payloadit takaisin)
     q_vec = model.encode([query], normalize_embeddings=True)[0]
-    hits = client.search(
-        collection_name=COLLECTION,
-        query_vector=q_vec.tolist(),
+    response = client.query_points(
+        collection_name=coll,
+        query=q_vec.tolist(),
         limit=initial_limit,
         with_vectors=True,
         with_payload=True,
     )
+    hits = response.points
 
     # Suodata heikot osumat (vector-score)
     prelim = [h for h in hits if (h.score is None or h.score >= score_threshold)]
     if not prelim:
         return []  # -> ei kontekstia; main() ei kutsu LLM:ää
+
+    if diagnostics is not None:
+        seen = set()
+        ids = []
+        for h in prelim:
+            p = h.payload or {}
+            pid = (p.get("doc_id") or p.get("source")) if eval_level == "doc" else (p.get("chunk_id") or p.get("uid"))
+            if pid and pid not in seen:
+                seen.add(pid)
+                ids.append(pid)
+        diagnostics["initial_candidate_ids"] = ids
 
     # 2) Kerää vektorit ja aja MMR
     prelim_with_vecs: List[Tuple[np.ndarray, object]] = []
@@ -233,23 +251,40 @@ def search(
                       top_n=min(top_k * 2, len(prelim_with_vecs)), diversity=diversity)
     mmr_hits = [prelim_with_vecs[i][1] for i in idxs]
 
-    # 3) Muodosta dictit (sis. uid)
-    mmr_items = [{
-        "uid": h.payload.get("uid"),
-        "score": round(h.score, 3) if h.score is not None else None,
-        "title": h.payload.get("title"),
-        "text": h.payload.get("text"),
-        "source": h.payload.get("source"),
-    } for h in mmr_hits]
+    # 3) Muodosta dictit (sis. chunk_id, uid, doc_id)
+    mmr_items = []
+    for h in mmr_hits:
+        p = h.payload or {}
+        mmr_items.append({
+            "chunk_id": p.get("chunk_id") or p.get("uid"),
+            "uid": p.get("uid") or p.get("chunk_id"),
+            "doc_id": p.get("doc_id") or p.get("source"),
+            "score": round(h.score, 3) if h.score is not None else None,
+            "title": p.get("title"),
+            "text": p.get("text"),
+            "source": p.get("source"),
+        })
+
+    if diagnostics is not None:
+        diagnostics["pre_rerank_ids"] = [(it.get("doc_id") or it.get("source")) if eval_level == "doc" else (it.get("chunk_id") or it.get("uid")) for it in mmr_items]
 
     # 4) Rerank (valinnainen)
     if cross_encoder is not None and len(mmr_items) > 1:
         mmr_items = crossencode_rerank(cross_encoder, query, mmr_items, top_k=max(top_k, 2))
+        if diagnostics is not None:
+            diagnostics["post_rerank_ids"] = [(it.get("doc_id") or it.get("source")) if eval_level == "doc" else (it.get("chunk_id") or it.get("uid")) for it in mmr_items]
 
     # 5) Deduplikointi
-    if DEDUPE_BY_SOURCE:
+    if skip_dedupe:
+        unique = mmr_items
+    elif dedupe_by_source is not None:
+        unique = _dedupe_by_source(mmr_items) if dedupe_by_source else _dedupe_by_uid(mmr_items)
+    elif DEDUPE_BY_SOURCE:
         unique = _dedupe_by_source(mmr_items)
     else:
         unique = _dedupe_by_uid(mmr_items)
 
-    return unique[:top_k]
+    final = unique[:top_k]
+    if diagnostics is not None:
+        diagnostics["final_ids"] = [(it.get("doc_id") or it.get("source")) if eval_level == "doc" else (it.get("chunk_id") or it.get("uid")) for it in final]
+    return final

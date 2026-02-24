@@ -1,0 +1,42 @@
+{
+  "timestamp_utc": "2026-02-24T17:33:00.404131+00:00",
+  "seed": 42,
+  "git_commit_hash": "2088cc9b22ebdb701099a690473c604d6fa047a8",
+  "git_branch": "master",
+  "environment_info": {
+    "python_version": "3.12.3 (main, Jan 22 2026, 20:57:42) [GCC 13.3.0]",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "executable": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/.venv/bin/python",
+    "current_working_directory": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari",
+    "timestamp_utc": "2026-02-24T17:32:59.992917+00:00",
+    "hostname": "KarineHei",
+    "cpu_info": "x86_64",
+    "package_versions": {
+      "qdrant_client": null,
+      "sentence_transformers": "5.2.3",
+      "transformers": "5.2.0",
+      "torch": "2.10.0+cu128",
+      "numpy": "2.4.2"
+    },
+    "gpu_info": {
+      "device_count": 1,
+      "device_name": "NVIDIA GeForce RTX 5080 Laptop GPU"
+    }
+  },
+  "collection_name": "rag_thesis_fi",
+  "qdrant_url": "http://localhost:6333",
+  "top_k": 5,
+  "initial_limit": 20,
+  "score_threshold": 0.0,
+  "eval_level": "doc",
+  "configs_run": [
+    "C0_baseline",
+    "C1_mmr",
+    "C2_mmr_rerank",
+    "C3_mmr_rerank_dedupe"
+  ],
+  "queries_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/annotations/queries.jsonl",
+  "gold_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/annotations/gold_annotations.jsonl",
+  "query_count": 6,
+  "duration_seconds": 24.76
+}
