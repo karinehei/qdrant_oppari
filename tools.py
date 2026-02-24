@@ -73,8 +73,9 @@ except Exception:
 # ------------------------
 # Configuration
 # ------------------------
-COLLECTION = "demo_docs"
-EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+from config import COLLECTION as COLLECTION_CFG, EMBED_MODEL as EMBED_MODEL_CFG, RERANK_MODEL
+COLLECTION = COLLECTION_CFG
+EMBED_MODEL = EMBED_MODEL_CFG
 
 
 # ------------------------
@@ -262,7 +263,7 @@ def ensure_reranker():
     """Create CrossEncoder reranker (optional)."""
     if not HAS_CE:
         raise RuntimeError("CrossEncoder is not available. Install: pip install sentence-transformers")
-    return CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+    return CrossEncoder(RERANK_MODEL)
 
 
 def rerank(question: str, results: List[Dict[str, Any]], reranker) -> List[Dict[str, Any]]:

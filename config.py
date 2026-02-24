@@ -9,7 +9,7 @@ This module contains all configuration settings including:
 """
 
 COLLECTION = "demo_docs"
-EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 RERANK_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 # Feature flags
