@@ -1,5 +1,5 @@
-config_name,query_count,mean_recall_at_k,mean_ndcg_at_k,p50_latency_ms,p95_latency_ms,p99_latency_ms
-C0_baseline,6,0.5833,0.5457,45.08,1419.98,1760.98
-C1_mmr,6,0.75,0.5976,56.97,135.93,137.52
-C2_mmr_rerank,6,0.4167,0.4467,2366.28,5981.14,6733.59
-C3_mmr_rerank_dedupe,6,0.4167,0.4467,265.18,3116.01,3436.52
+config_name,rerank_model_name,base_config_name,query_count,mean_recall_at_k,mean_ndcg_at_k,p50_latency_ms,p95_latency_ms,p99_latency_ms
+C0_baseline,,C0_baseline,30,0.65,0.58,26.09,46.91,1319.23
+C1_mmr,,C1_mmr,30,0.7167,0.6146,26.35,44.26,47.27
+C2_mmr_rerank,BAAI/bge-reranker-v2-m3,C2_mmr_rerank,30,0.7833,0.6934,258.42,1269.12,1349.25
+C3_mmr_rerank_dedupe,BAAI/bge-reranker-v2-m3,C3_mmr_rerank_dedupe,30,0.7833,0.6934,242.69,1234.77,1342.11

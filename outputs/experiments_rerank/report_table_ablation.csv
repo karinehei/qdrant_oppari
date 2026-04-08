@@ -1,0 +1,7 @@
+config_name,query_count,mean_recall_at_k,mean_ndcg_at_k,std_recall_at_k,std_ndcg_at_k
+C0_baseline,30,0.65,0.58,0.438,0.408
+C1_mmr,30,0.717,0.615,0.409,0.37
+C2_mmr_rerank__baai_bge_reranker_v2_m3,30,0.783,0.693,0.364,0.355
+C2_mmr_rerank__cross_encoder_ms_marco_minilm_l_6_v2,30,0.733,0.659,0.388,0.366
+C3_mmr_rerank_dedupe__baai_bge_reranker_v2_m3,30,0.783,0.693,0.364,0.355
+C3_mmr_rerank_dedupe__cross_encoder_ms_marco_minilm_l_6_v2,30,0.733,0.659,0.388,0.366

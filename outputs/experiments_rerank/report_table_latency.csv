@@ -1,0 +1,7 @@
+config_name,p50_latency_ms,p95_latency_ms,p99_latency_ms,query_count
+C0_baseline,20.23,34.54,1333.38,30
+C1_mmr,21.05,35.84,42.98,30
+C2_mmr_rerank__baai_bge_reranker_v2_m3,231.38,294.92,382.21,30
+C2_mmr_rerank__cross_encoder_ms_marco_minilm_l_6_v2,54.25,68.8,379.36,30
+C3_mmr_rerank_dedupe__baai_bge_reranker_v2_m3,229.82,276.1,310.6,30
+C3_mmr_rerank_dedupe__cross_encoder_ms_marco_minilm_l_6_v2,50.46,65.2,68.7,30

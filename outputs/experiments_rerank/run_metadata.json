@@ -1,0 +1,71 @@
+{
+  "timestamp_utc": "2026-02-27T09:57:26.755686+00:00",
+  "seed": 42,
+  "git_commit_hash": "0bf114886e687ca706f027d81fd20bd1822b07a9",
+  "git_branch": "main",
+  "environment_info": {
+    "python_version": "3.12.3 (main, Jan 22 2026, 20:57:42) [GCC 13.3.0]",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "executable": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/.venv/bin/python",
+    "current_working_directory": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari",
+    "timestamp_utc": "2026-02-27T09:57:26.119556+00:00",
+    "hostname": "KarineHei",
+    "cpu_info": "x86_64",
+    "package_versions": {
+      "qdrant_client": null,
+      "sentence_transformers": "5.2.3",
+      "transformers": "5.2.0",
+      "torch": "2.10.0+cu128",
+      "numpy": "2.4.2"
+    },
+    "gpu_info": {
+      "device_count": 1,
+      "device_name": "NVIDIA GeForce RTX 5080 Laptop GPU"
+    }
+  },
+  "collection_name": "rag_thesis_fi",
+  "qdrant_url": "http://localhost:6333",
+  "top_k": 5,
+  "initial_limit": 20,
+  "score_threshold": 0.0,
+  "eval_level": "doc",
+  "configs_run": [
+    "C0_baseline",
+    "C1_mmr",
+    "C2_mmr_rerank",
+    "C3_mmr_rerank_dedupe"
+  ],
+  "rerank_models_requested": [
+    "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "BAAI/bge-reranker-v2-m3"
+  ],
+  "rerank_models_loaded": [
+    "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "BAAI/bge-reranker-v2-m3"
+  ],
+  "rerank_models_failed": [],
+  "config_expansion_summary": {
+    "base_configs": [
+      "C0_baseline",
+      "C1_mmr",
+      "C2_mmr_rerank",
+      "C3_mmr_rerank_dedupe"
+    ],
+    "expanded_configs": [
+      "C0_baseline",
+      "C1_mmr",
+      "C2_mmr_rerank__cross_encoder_ms_marco_minilm_l_6_v2",
+      "C2_mmr_rerank__baai_bge_reranker_v2_m3",
+      "C3_mmr_rerank_dedupe__cross_encoder_ms_marco_minilm_l_6_v2",
+      "C3_mmr_rerank_dedupe__baai_bge_reranker_v2_m3"
+    ],
+    "rerank_models_used": [
+      "BAAI/bge-reranker-v2-m3",
+      "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    ]
+  },
+  "queries_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/annotations/queries.jsonl",
+  "gold_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/annotations/gold_annotations.jsonl",
+  "query_count": 30,
+  "duration_seconds": 31.82
+}

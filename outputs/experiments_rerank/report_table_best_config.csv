@@ -1,0 +1,4 @@
+criterion,config_name,value
+best_ndcg_at_k,C2_mmr_rerank__baai_bge_reranker_v2_m3,0.693
+best_recall_at_k,C2_mmr_rerank__baai_bge_reranker_v2_m3,0.783
+best_p50_latency_ms,C0_baseline,20.23

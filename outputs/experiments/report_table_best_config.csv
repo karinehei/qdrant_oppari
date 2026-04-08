@@ -1,4 +1,4 @@
 criterion,config_name,value
-best_ndcg_at_k,C2_mmr_rerank,0.61
-best_recall_at_k,C2_mmr_rerank,0.52
-best_p50_latency_ms,C0_baseline,120.5
+best_ndcg_at_k,C2_mmr_rerank,0.693
+best_recall_at_k,C2_mmr_rerank,0.783
+best_p50_latency_ms,C0_baseline,26.09

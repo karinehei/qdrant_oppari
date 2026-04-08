@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-02-24T18:14:04Z",
+  "timestamp": "2026-02-27T09:10:23Z",
   "chunks_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/processed/chunks.jsonl",
   "collection_name": "rag_thesis_fi",
-  "indexed_count": 192,
+  "indexed_count": 1358,
   "skipped_count": 0,
   "total_loaded": 1358,
   "batch_size": 64,
@@ -12,5 +12,5 @@
   "hnsw_applied": false,
   "hnsw_m": null,
   "hnsw_ef_construct": null,
-  "duration_seconds": 1.29
+  "duration_seconds": 5.39
 }

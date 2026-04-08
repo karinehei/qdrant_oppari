@@ -1,14 +1,14 @@
 {
-  "timestamp_utc": "2026-02-24T17:33:00.404131+00:00",
+  "timestamp_utc": "2026-02-27T09:42:21.533900+00:00",
   "seed": 42,
-  "git_commit_hash": "2088cc9b22ebdb701099a690473c604d6fa047a8",
-  "git_branch": "master",
+  "git_commit_hash": "0bf114886e687ca706f027d81fd20bd1822b07a9",
+  "git_branch": "main",
   "environment_info": {
     "python_version": "3.12.3 (main, Jan 22 2026, 20:57:42) [GCC 13.3.0]",
     "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
     "executable": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/.venv/bin/python",
     "current_working_directory": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari",
-    "timestamp_utc": "2026-02-24T17:32:59.992917+00:00",
+    "timestamp_utc": "2026-02-27T09:42:20.988021+00:00",
     "hostname": "KarineHei",
     "cpu_info": "x86_64",
     "package_versions": {
@@ -35,8 +35,30 @@
     "C2_mmr_rerank",
     "C3_mmr_rerank_dedupe"
   ],
+  "rerank_models_requested": [],
+  "rerank_models_loaded": [
+    "BAAI/bge-reranker-v2-m3"
+  ],
+  "rerank_models_failed": [],
+  "config_expansion_summary": {
+    "base_configs": [
+      "C0_baseline",
+      "C1_mmr",
+      "C2_mmr_rerank",
+      "C3_mmr_rerank_dedupe"
+    ],
+    "expanded_configs": [
+      "C0_baseline",
+      "C1_mmr",
+      "C2_mmr_rerank",
+      "C3_mmr_rerank_dedupe"
+    ],
+    "rerank_models_used": [
+      "BAAI/bge-reranker-v2-m3"
+    ]
+  },
   "queries_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/annotations/queries.jsonl",
   "gold_path": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/annotations/gold_annotations.jsonl",
-  "query_count": 6,
-  "duration_seconds": 24.76
+  "query_count": 30,
+  "duration_seconds": 69.32
 }

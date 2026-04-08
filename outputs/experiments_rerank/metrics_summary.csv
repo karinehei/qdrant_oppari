@@ -1,0 +1,7 @@
+config_name,rerank_model_name,base_config_name,query_count,mean_recall_at_k,mean_ndcg_at_k,p50_latency_ms,p95_latency_ms,p99_latency_ms
+C0_baseline,,C0_baseline,30,0.65,0.58,20.23,34.54,1333.38
+C1_mmr,,C1_mmr,30,0.7167,0.6146,21.05,35.84,42.98
+C2_mmr_rerank__cross_encoder_ms_marco_minilm_l_6_v2,cross-encoder/ms-marco-MiniLM-L-6-v2,C2_mmr_rerank,30,0.7333,0.6591,54.25,68.8,379.36
+C2_mmr_rerank__baai_bge_reranker_v2_m3,BAAI/bge-reranker-v2-m3,C2_mmr_rerank,30,0.7833,0.6934,231.38,294.92,382.21
+C3_mmr_rerank_dedupe__cross_encoder_ms_marco_minilm_l_6_v2,cross-encoder/ms-marco-MiniLM-L-6-v2,C3_mmr_rerank_dedupe,30,0.7333,0.6591,50.46,65.2,68.7
+C3_mmr_rerank_dedupe__baai_bge_reranker_v2_m3,BAAI/bge-reranker-v2-m3,C3_mmr_rerank_dedupe,30,0.7833,0.6934,229.82,276.1,310.6

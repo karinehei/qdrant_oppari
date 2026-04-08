@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-02-24T08:37:41.176192+00:00",
-  "raw_dir": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\data\\raw",
+  "timestamp": "2026-02-27T09:02:38.187100+00:00",
+  "raw_dir": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/raw",
   "document_count_loaded": 10,
   "document_count_processed": 10,
   "document_count_failed": 0,
@@ -23,9 +23,9 @@
     "limit_docs": null
   },
   "output_paths": {
-    "documents": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\data\\processed\\documents.jsonl",
-    "chunks": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\data\\processed\\chunks.jsonl",
-    "summary": "D:\\amk\\oppari\\qdrant_oppari\\qdrant_oppari\\outputs\\logs\\preprocess_summary.json"
+    "documents": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/processed/documents.jsonl",
+    "chunks": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/data/processed/chunks.jsonl",
+    "summary": "/mnt/d/amk/oppari/qdrant_oppari/qdrant_oppari/outputs/logs/preprocess_summary.json"
   },
   "top_10_longest_documents": [
     {
@@ -71,44 +71,44 @@
   ],
   "top_10_shortest_documents": [
     {
-      "id": "Majander_Pyry",
-      "length": 130478
-    },
-    {
-      "id": "Myller_Niskanen_Rytilahti",
-      "length": 120624
-    },
-    {
-      "id": "Rauten_Sami",
-      "length": 110062
-    },
-    {
-      "id": "Sarkiniemi_Mikko",
-      "length": 92905
-    },
-    {
-      "id": "Vilpo_Mika",
-      "length": 82617
-    },
-    {
-      "id": "Martin_Joel",
-      "length": 82325
-    },
-    {
-      "id": "Holopainen_Petri",
-      "length": 72835
-    },
-    {
-      "id": "Antikainen_Jari",
-      "length": 69556
+      "id": "Pulli_Samu",
+      "length": 47885
     },
     {
       "id": "Virtanen_Lauri",
       "length": 52158
     },
     {
-      "id": "Pulli_Samu",
-      "length": 47885
+      "id": "Antikainen_Jari",
+      "length": 69556
+    },
+    {
+      "id": "Holopainen_Petri",
+      "length": 72835
+    },
+    {
+      "id": "Martin_Joel",
+      "length": 82325
+    },
+    {
+      "id": "Vilpo_Mika",
+      "length": 82617
+    },
+    {
+      "id": "Sarkiniemi_Mikko",
+      "length": 92905
+    },
+    {
+      "id": "Rauten_Sami",
+      "length": 110062
+    },
+    {
+      "id": "Myller_Niskanen_Rytilahti",
+      "length": 120624
+    },
+    {
+      "id": "Majander_Pyry",
+      "length": 130478
     }
   ],
   "duplicate_chunk_estimate": {
