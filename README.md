@@ -1,6 +1,6 @@
 # Qdrant RAG – Opinnäytetyön tutkimusprototyyppi
 
-Qdrant-pohjainen RAG-tutkimusprototyyppi retrieval-ablaatioiden arviointiin suomenkielisellä aineistolla (Theseus-opinnäytteet + viralliset suomidokumentit).
+Qdrant-pohjainen RAG-tutkimusprototyyppi retrieval-ablaatioiden arviointiin suomenkielisellä aineistolla (Theseus-opinnäytteet).
 
 ## 📋 Sisällysluettelo
 
@@ -10,6 +10,7 @@ Qdrant-pohjainen RAG-tutkimusprototyyppi retrieval-ablaatioiden arviointiin suom
 - [Data Preparation](#data-preparation)
 - [Annotations and Evaluation Setup](#annotations-and-evaluation-setup)
 - [Running Retrieval Experiments](#running-retrieval-experiments)
+- [Case Studies and Appendix](#case-studies-and-appendix)
 - [Build Report Tables](#build-report-tables)
 - [Reproducibility](#reproducibility)
 - [Limitations](#limitations)
@@ -26,7 +27,7 @@ Tämä projekti on **opinnäytetyön tutkimusprototyyppi**, ei tuotantokäyttöi
 - **Qdrant-pohjaisen RAG-vetoritietokannan** semanttiseen hakuun
 - **Retrieval-ablaatiot**: baseline, MMR, reranking, deduplication
 - **Arviointimittarit**: recall@k, nDCG@k, latenssi (p50/p95/p99)
-- **Suomenkielinen aineisto**: Theseus-opinnäytteet ja viralliset suomidokumentit
+- **Suomenkielinen aineisto**: Theseus-opinnäytteet
 
 ### Ei pääfokus
 
@@ -42,13 +43,15 @@ Tutkimusputki etenee seuraavasti:
 
 | Vaihe | Skripti / moduuli | Tuotokset |
 |-------|-------------------|-----------|
-| 1. Raakadatan keruu | `data/raw` | PDF-tiedostot (Theseus, viralliset) |
+| 1. Raakadatan keruu | `data/raw` | PDF-tiedostot (Theseus-opinnäytteet) |
 | 2. Preprocessointi | `scripts/preprocess_corpus.py` | `documents.jsonl`, `chunks.jsonl` |
 | 3. Datan laadun tarkistus | `scripts/check_data_quality.py` | `data_quality_report.json` |
 | 4. Indeksointi Qdrantiin | `scripts/index_corpus.py` | Qdrant-kokoelma (esim. `rag_thesis_fi`) |
 | 5. Queryt + gold-annotaatiot | `data/annotations/`, `annotations.py`, `scripts/validate_annotations.py` | `queries.jsonl`, `gold_annotations.jsonl` |
 | 6. Retrieval-ablaatiot | `scripts/run_experiments.py` | `retrieval_hits.csv`, `per_query_metrics.csv`, `metrics_summary.csv`, `run_metadata.json` |
 | 7. Raportointitaulukot | `scripts/build_report_tables.py` | `report_table_ablation.csv`, `report_table_latency.csv`, `report_tables.md` |
+| 8. Case studies → liite | `scripts/generate_case_studies.py` → `scripts/format_case_studies_for_appendix.py` | `case_studies.md`, `LIITE_X_Case_esimerkit.md` |
+| 9. Putken sanity check | `scripts/sanity_check_pipeline.py` | Konsoliyhteenveto putken valmiudesta |
 
 ---
 
@@ -73,7 +76,8 @@ qdrant_oppari/
 │   └── annotations/                   # queries.jsonl, gold_annotations.jsonl
 ├── outputs/
 │   ├── logs/                          # preprocess_summary.json, data_quality_report.json
-│   └── experiments/                   # retrieval_hits.csv, metrics_summary.csv, run_metadata.json
+│   ├── experiments/                   # Pääkokeet: retrieval_hits.csv, metrics_summary.csv, run_metadata.json
+│   └── experiments_rerank/            # Rerank-vertailu (--output-dir outputs/experiments_rerank)
 ├── scripts/
 │   ├── preprocess_corpus.py
 │   ├── check_data_quality.py
@@ -81,6 +85,8 @@ qdrant_oppari/
 │   ├── validate_annotations.py
 │   ├── run_experiments.py             # Pääskripti retrieval-ablaatioille
 │   ├── build_report_tables.py
+│   ├── generate_case_studies.py       # Case studies (1. aja ensin)
+│   ├── format_case_studies_for_appendix.py  # Liite (2. aja tämän jälkeen)
 │   └── sanity_check_pipeline.py
 ├── utils/
 │   ├── metrics_relevance.py           # recall@k, nDCG@k
@@ -95,7 +101,7 @@ qdrant_oppari/
 
 ### 1. Raakadatan sijoittaminen
 
-Sijoita Theseus-PDF:t ja viralliset suomidokumentit kansioon `data/raw/`.
+Sijoita Theseus-opinnäytetyöt PDF-muodossa kansioon `data/raw/`.
 
 ### 2. Preprocessointi
 
@@ -169,6 +175,9 @@ python scripts/run_experiments.py --collection-name rag_thesis_fi --eval-level d
 
 # Toteutettavuus: seed + parametrit
 python scripts/run_experiments.py --collection-name rag_thesis_fi --eval-level doc --seed 42 --limit-queries 5 --verbose
+
+# Rerank-mallien vertailu (tulokset erilliseen kansioon)
+python scripts/run_experiments.py --output-dir outputs/experiments_rerank --rerank-models cross-encoder/ms-marco-MiniLM-L-6-v2 BAAI/bge-reranker-v2-m3 --verbose
 ```
 
 ### Parametrit
@@ -177,6 +186,8 @@ python scripts/run_experiments.py --collection-name rag_thesis_fi --eval-level d
 |-----------|--------|--------|
 | `--collection-name` | Qdrant-kokoelma | `rag_thesis_fi` |
 | `--eval-level` | `doc` tai `chunk` | `doc` |
+| `--output-dir` | Tulostiedostojen kansio | `outputs/experiments` |
+| `--rerank-models` | Vertailtavat rerank-mallit (C2/C3) | oletusmalli |
 | `--seed` | Satunnaissiemen | `42` |
 | `--qdrant-url` | Qdrant-osoite | `http://localhost:6333` |
 | `--limit-queries` | Kyselyt (debug) | ei rajaa |
@@ -193,6 +204,27 @@ python scripts/run_experiments.py --collection-name rag_thesis_fi --eval-level d
 
 ---
 
+## Case Studies and Appendix
+
+Liitteen esimerkkitapaukset tuotetaan **aina tässä järjestyksessä**:
+
+```bash
+python scripts/generate_case_studies.py
+python scripts/format_case_studies_for_appendix.py
+```
+
+- **`generate_case_studies.py`** luo `case_studies.md` retrieval-tuloksista
+- **`format_case_studies_for_appendix.py`** muuntaa sen thesis-liitteeksi `LIITE_X_Case_esimerkit.md`
+
+Rerank-kokeista (erillinen `outputs/experiments_rerank`):
+
+```bash
+python scripts/generate_case_studies.py --experiments-dir outputs/experiments_rerank --output-path outputs/experiments_rerank/case_studies.md
+python scripts/format_case_studies_for_appendix.py --input outputs/experiments_rerank/case_studies.md --output outputs/experiments_rerank/LIITE_X_Case_esimerkit.md
+```
+
+---
+
 ## Build Report Tables
 
 Luo opinnäytetyön raportointia varten taulukot:
@@ -200,6 +232,12 @@ Luo opinnäytetyön raportointia varten taulukot:
 ```bash
 python scripts/build_report_tables.py
 python scripts/build_report_tables.py --input-dir outputs/experiments --output-dir outputs/experiments
+```
+
+Rerank-vertailun tuloksille (erillinen kansio):
+
+```bash
+python scripts/build_report_tables.py --input-dir outputs/experiments_rerank --output-dir outputs/experiments_rerank
 ```
 
 ### Tuotokset
@@ -210,6 +248,18 @@ python scripts/build_report_tables.py --input-dir outputs/experiments --output-d
 | `report_table_latency.csv` | Latenssi (p50, p95, p99) |
 | `report_table_best_config.csv` | Paras config per mittari |
 | `report_tables.md` | Markdown-yhteenveto |
+
+---
+
+## Pipeline Sanity Check
+
+Nopea tarkistus, että tutkimusputken keskeiset tiedostot löytyvät:
+
+```bash
+python scripts/sanity_check_pipeline.py
+```
+
+Tämä on hyödyllinen ennen varsinaista `run_experiments.py`-ajoa.
 
 ---
 
@@ -229,19 +279,19 @@ Ympäristötiedot dokumentoivat Python-version, pakettiversiot (qdrant-client, s
 
 - **PDF-ekstraktio**: Tavutus, header/footer ja OCR-rajoitus voivat vaikuttaa laatuun
 - **Gold-annotaatio**: Subjektiivinen; annotaattorien välinen yhteensopivuus voi vaihdella
-- **Aineisto**: Suomenkielinen, domain-spesifinen (opinnäytteet + viralliset dokumentit)
+- **Aineisto**: Suomenkielinen, domain-spesifinen (Theseus-opinnäytteet)
 - **Retrieval vs generointi**: recall@k ja nDCG@k mittavat relevanssia; groundedness tai vastaavuus totuuteen ei ole sama asia
 
 ---
 
 ## Demo and CLI Usage (legacy / development)
 
-Opinnäytetyön mittaustulokset tuotetaan **`scripts/run_experiments.py`** -skriptillä. Demo- ja CLI-komponentit ovat kehitys- ja demo-käyttöön:
+Opinnäytetyön mittaustulokset tuotetaan **`scripts/run_experiments.py`** -skriptillä. Demo- ja CLI-komponentit ovat kehitys- ja demo-käyttöön; **kokeet eivät vaadi LLM-integraatiota**.
 
 ### `mini_rag_pipeline_qdrant.py`
 
 - Täysi RAG-pipeline MMR:llä, rerankingilla ja arvioinnilla
-- LLM-integraatio (Mistral AI)
+- Valinnainen LLM-integraatio (Mistral AI) – vaatii `MISTRAL_API_KEY`
 
 ```python
 from mini_rag_pipeline_qdrant import main
@@ -282,9 +332,19 @@ pip install -r requirements.txt
 docker run -p 6333:6333 -v qdrant_storage:/qdrant/storage qdrant/qdrant:latest
 ```
 
-### LLM-integraatio (valinnainen)
+### Mallit ja LLM-integraatio
 
-Luodaan `.env` ja lisätään `MISTRAL_API_KEY` käyttäen `mini_rag_pipeline_qdrant.py` tai `tools.py` LLM-kutsuja.
+**Generatiivinen LLM (suora API-kutsu koodissa):**
+- `open-mistral-nemo` (`mini_rag_pipeline_qdrant.py`, Mistral API; vaatii `MISTRAL_API_KEY`)
+
+**Retrieval-putken tekstimallit (ei generatiivinen LLM-vastaus):**
+- Embedding-malli: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (`config.py`)
+- Rerank-malli (oletus): `BAAI/bge-reranker-v2-m3` (`config.py`)
+- Rerank-vertailussa käytetty myös: `cross-encoder/ms-marco-MiniLM-L-6-v2` (`scripts/run_experiments.py` esimerkkiajo)
+
+**Huomio mittausputkesta:**
+- `scripts/run_experiments.py` arvioi retrievalin (recall@k, nDCG@k, latenssi), ei tee LLM-generointia.
+- `outputs/experiments/groundedness_summary.csv` viittaa LLM-pohjaisiin groundedness-tuloksiin, mutta tässä repossa ei ole erillistä skriptiä, joka suorittaisi usean LLM-providerin generointiajot alusta asti.
 
 ---
 
@@ -294,8 +354,13 @@ This project is licensed under the MIT License.
 
 ---
 
-## Acknowledgments
+## Keskeiset työkalut ja lähteet
 
-- [Qdrant](https://qdrant.tech/) – Vector database
-- [SentenceTransformers](https://www.sbert.net/) – Embedding models
-- [Mistral AI](https://mistral.ai/) – LLM provider (demo)
+- [Qdrant](https://qdrant.tech/) – vektoritietokanta
+- [SentenceTransformers](https://www.sbert.net/) – embedding- ja rerank-kirjasto
+- [Hugging Face](https://huggingface.co/) – mallien jakelu ja model hub
+- [BAAI](https://www.baai.ac.cn/) – `bge-reranker-v2-m3`-malli
+- [MS MARCO Cross-Encoders](https://www.sbert.net/docs/pretrained-models/ce-msmarco.html) – `cross-encoder/ms-marco-MiniLM-L-6-v2` rerank-vertailuihin
+- [Mistral AI](https://mistral.ai/) – LLM-palveluntarjoaja (valinnainen demo)
+- [pypdf](https://pypdf.readthedocs.io/) – PDF-tekstin purku preprocess-vaiheessa
+- [Theseus](https://www.theseus.fi/) – opinnäytetyöaineiston lähde
