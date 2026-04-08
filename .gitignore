@@ -34,6 +34,8 @@ env/
 # IDE
 .idea/
 .vscode/
+*.xml
+*.iml
 *.swp
 *.swo
 *~
