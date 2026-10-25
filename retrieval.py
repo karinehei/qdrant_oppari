@@ -4,7 +4,7 @@ Retrieval Module
 Handles semantic search, MMR selection, reranking, and deduplication.
 """
 
-from typing import List, Dict, Tuple, Optional
+from typing import Any, List, Dict, Tuple, Optional
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer, CrossEncoder
 import numpy as np
@@ -25,7 +25,7 @@ def _nz_norm(x: np.ndarray) -> np.ndarray:
         Adds small epsilon (1e-12) to prevent division by zero.
     """
     n = np.linalg.norm(x)
-    return x / (n + 1e-12)
+    return np.asarray(x / (n + 1e-12))
 
 
 def _dedupe_by_uid(items: List[Dict]) -> List[Dict]:
@@ -240,7 +240,7 @@ def search(
         diagnostics["initial_candidate_ids"] = ids
 
     # 2) Kerää vektorit ja aja MMR
-    prelim_with_vecs: List[Tuple[np.ndarray, object]] = []
+    prelim_with_vecs: List[Tuple[np.ndarray, Any]] = []
     for h in prelim:
         if getattr(h, "vector", None) is not None:
             prelim_with_vecs.append((np.array(h.vector, dtype=np.float32), h))
@@ -252,14 +252,15 @@ def search(
     mmr_hits = [prelim_with_vecs[i][1] for i in idxs]
 
     # 3) Muodosta dictit (sis. chunk_id, uid, doc_id)
-    mmr_items = []
+    mmr_items: List[Dict] = []
     for h in mmr_hits:
-        p = h.payload or {}
+        p = getattr(h, "payload", None) or {}
+        score = getattr(h, "score", None)
         mmr_items.append({
             "chunk_id": p.get("chunk_id") or p.get("uid"),
             "uid": p.get("uid") or p.get("chunk_id"),
             "doc_id": p.get("doc_id") or p.get("source"),
-            "score": round(h.score, 3) if h.score is not None else None,
+            "score": round(score, 3) if score is not None else None,
             "title": p.get("title"),
             "text": p.get("text"),
             "source": p.get("source"),

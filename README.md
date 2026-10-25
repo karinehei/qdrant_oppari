@@ -14,6 +14,7 @@ Qdrant-pohjainen RAG-tutkimusprototyyppi retrieval-ablaatioiden arviointiin suom
 - [Build Report Tables](#build-report-tables)
 - [Reproducibility](#reproducibility)
 - [Limitations](#limitations)
+- [Julkaisun huomautus (q5)](#julkaisun-huomautus-q5)
 - [Interaktiivinen tulosesittely](#interaktiivinen-tulosesittely)
 - [Demo and CLI Usage (legacy / development)](#demo-and-cli-usage-legacy--development)
 - [Installation](#installation)
@@ -282,6 +283,24 @@ Ympäristötiedot dokumentoivat Python-version, pakettiversiot (qdrant-client, s
 - **Gold-annotaatio**: Subjektiivinen; annotaattorien välinen yhteensopivuus voi vaihdella
 - **Aineisto**: Suomenkielinen, domain-spesifinen (Theseus-opinnäytteet)
 - **Retrieval vs generointi**: recall@k ja nDCG@k mittavat relevanssia; groundedness tai vastaavuus totuuteen ei ole sama asia
+- **Julkaistu PDF**: luvun 6.4 q5-esimerkissä on kirjoitusvirhe (ks. [Julkaisun huomautus](#julkaisun-huomautus-q5)); päätulostaulukot eivät muutu
+
+---
+
+## Julkaisun huomautus (q5)
+
+Luvun 6.4 tapausesimerkissä kyselyn **q5** recall@k-luvut on kirjoitettu väärin:
+
+| Lähde | C0 | C1 | C2 | C3 |
+|-------|----|----|----|----|
+| Julkaistu PDF (6.4, q5) | 0 | 0 | 0,5 | 0,5 |
+| Repositorio / liite 3 (`per_query_metrics.csv`) | **1,00** | **0,00** | **1,00** | **1,00** |
+
+PDF:n luvut kuuluvat kyselylle **q2**, eivät q5:lle. Oikea q5-tarina: baseline löytää goldin (C0 = 1), MMR pudottaa sen (C1 = 0), rerank palauttaa sen (C2 = C3 = 1).
+
+**Tämän repositorion ja tulosesittelyn lähde on CSV / liite 3.** Ablaatioiden keskiarvot (taulukot 3–6) sekä pohdinnan ja yhteenvedon pääjohtopäätökset perustuvat niihin; yksi väärä tapausvirke ei muuta niitä.
+
+Lisätietoja: `docs/publication_traceability.md`.
 
 ---
 
@@ -292,7 +311,7 @@ Tämä repositorio sisältää julkaistun opinnäytetyön tutkimuskoodin ja tall
 Heinonen, Karine (2026). *Hakustrategioiden vaikutus suomenkielisen RAG-järjestelmän tiedonhaun laatuun ja suorituskykyyn.* LAB-ammattikorkeakoulu.  
 https://www.theseus.fi/items/4c5b8d64-c921-47f4-9c9a-52866778055a
 
-Hakemiston `web/` sivusto on julkaisun interaktiivinen tulosesittely. Se näyttää vain tallennettuja tuloksia. Se ei ole chatbot, ei käynnistä Qdrantia eikä laske uusia hakuja. Näkyvä raja on: “Opinnäytetyön tallennetut tutkimustulokset · Ei reaaliaikaista hakua”.
+Hakemiston `web/` sivusto on julkaisun interaktiivinen tulosesittely. Se näyttää vain tallennettuja tuloksia. Se ei ole chatbot, ei käynnistä Qdrantia eikä laske uusia hakuja. Näkyvä raja on: “Opinnäytetyön tallennetut tutkimustulokset · Ei reaaliaikaista hakua”. q5:n luvut näytetään liitteen 3 mukaisesti (ks. [Julkaisun huomautus](#julkaisun-huomautus-q5)).
 
 Sivusto ei ole vielä julkaistu. Odotettu osoite Pages-käyttöönoton jälkeen on https://karinehei.github.io/qdrant_oppari/
 

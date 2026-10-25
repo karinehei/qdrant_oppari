@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import Any, TypedDict
+from typing import Any, TypedDict, cast
 
 __all__ = [
     "QueryRecord",
@@ -76,24 +76,24 @@ def load_queries(path: str | Path) -> list[QueryRecord]:
     """Load queries from JSONL. Returns list of QueryRecord dicts."""
     path = Path(path)
     raw = _load_jsonl(path)
-    return [r for r in raw if isinstance(r, dict)]
+    return cast(list[QueryRecord], [r for r in raw if isinstance(r, dict)])
 
 
 def load_gold_annotations(path: str | Path) -> list[GoldAnnotation]:
     """Load gold annotations from JSONL. Returns list of GoldAnnotation dicts."""
     path = Path(path)
     raw = _load_jsonl(path)
-    return [r for r in raw if isinstance(r, dict)]
+    return cast(list[GoldAnnotation], [r for r in raw if isinstance(r, dict)])
 
 
 def save_queries(path: str | Path, queries: list[QueryRecord]) -> None:
     """Save queries to JSONL."""
-    _save_jsonl(Path(path), queries)
+    _save_jsonl(Path(path), cast(list[dict[str, Any]], queries))
 
 
 def save_gold_annotations(path: str | Path, annotations: list[GoldAnnotation]) -> None:
     """Save gold annotations to JSONL."""
-    _save_jsonl(Path(path), annotations)
+    _save_jsonl(Path(path), cast(list[dict[str, Any]], annotations))
 
 
 def validate_queries(queries: list[QueryRecord]) -> tuple[list[QueryRecord], list[str]]:

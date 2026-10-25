@@ -186,7 +186,7 @@ def semantic_search(
     if doc_type:
         must.append(FieldCondition(key="doc_type", match=MatchValue(value=doc_type)))
     if must:
-        q_filter = Filter(must=must)
+        q_filter = Filter(must=must)  # type: ignore[arg-type]
 
     response = client.query_points(
         collection_name=COLLECTION,

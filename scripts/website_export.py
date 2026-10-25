@@ -406,9 +406,11 @@ def median(values: list[float]) -> float:
 def load_annotations(root: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     from annotations import load_gold_annotations, load_queries
 
+    from typing import cast
+
     queries = load_queries(root / "data" / "annotations" / "queries.jsonl")
     gold = load_gold_annotations(root / "data" / "annotations" / "gold_annotations.jsonl")
-    return queries, gold
+    return cast(list[dict[str, Any]], list(queries)), cast(list[dict[str, Any]], list(gold))
 
 
 def validate_annotations(queries: list[dict[str, Any]], gold: list[dict[str, Any]], documents: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -715,15 +717,15 @@ def build_cases(per_query: list[dict[str, Any]], hits: list[dict[str, Any]] | No
             )
         )
 
-    identical_c2_c3 = []
-    changed_c2_c3 = []
+    identical_c2_c3: list[str] = []
+    changed_c2_c3: list[str] = []
     for query_id in sorted({row["query_id"] for row in per_query}):
         c2 = question_metric(per_query, query_id, "C2_mmr_rerank")
         c3 = question_metric(per_query, query_id, "C3_mmr_rerank_dedupe")
         same = close(c2["recall_at_k"], c3["recall_at_k"], 1e-12) and close(c2["ndcg_at_k"], c3["ndcg_at_k"], 1e-12)
         (identical_c2_c3 if same else changed_c2_c3).append(query_id)
 
-    cases = [
+    cases: list[dict[str, Any]] = [
         {
             "query_id": "q6",
             "kind": "improvement",
@@ -945,7 +947,7 @@ def traceability_rows() -> list[dict[str, Any]]:
 
 
 def render_traceability(dataset: dict[str, Any]) -> str:
-    lines = [
+    lines: list[str] = [
         "# Julkaisun ja repositorion jäljitettävyys",
         "",
         "Tämä asiakirja on johdettu tarkistusviennistä. Se ei korvaa alkuperäisiä tulostiedostoja eikä opinnäytetyötä.",
@@ -957,7 +959,7 @@ def render_traceability(dataset: dict[str, Any]) -> str:
         f"- Commit, jossa 30 kyselyn tulostiedostot ovat puussa: `{OUTPUT_COMMIT}`",
         f"- Sivuston vientiversio: `{dataset['website_export_revision']}`",
         "",
-        PUBLICATION["page_basis_fi"],
+        str(PUBLICATION["page_basis_fi"]),
         "",
         "## Tilat",
         "",
@@ -1012,7 +1014,7 @@ def render_traceability(dataset: dict[str, Any]) -> str:
             "",
             "## Groundedness",
             "",
-            dataset["groundedness"]["reason_fi"],
+            str(dataset["groundedness"]["reason_fi"]),
             "",
             "## Toistuvat dokumentit",
             "",
@@ -1023,7 +1025,7 @@ def render_traceability(dataset: dict[str, Any]) -> str:
             "",
             "## Annotaatiot",
             "",
-            dataset["annotations"]["identity"]["uncertainty_fi"],
+            str(dataset["annotations"]["identity"]["uncertainty_fi"]),
             "",
         ]
     )
@@ -1040,7 +1042,7 @@ def build_dataset(root: Path | None = None) -> dict[str, Any]:
     corpus, corpus_findings = corpus_checks(documents, chunk_lengths, gold)
     findings.extend(corpus_findings)
 
-    runs_spec = [
+    runs_spec: list[dict[str, Any]] = [
         {
             "id": "ablation",
             "label_fi": "Pääablaatio",

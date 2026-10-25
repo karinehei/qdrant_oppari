@@ -18,12 +18,12 @@ Functions:
     eval_query: Evaluate a search function on a query with expected sources
 """
 from __future__ import annotations
-from typing import Callable, Dict, List, Iterable
+from typing import Any, Callable, Dict, Iterable, List, Sequence
 import math
 
 __all__ = ["dcg", "ndcg_at_k", "recall_at_k", "eval_query"]
 
-def dcg(relevances: List[float], k: int) -> float:
+def dcg(relevances: Sequence[float], k: int) -> float:
     """
     Calculate Discounted Cumulative Gain (DCG).
     
@@ -46,7 +46,7 @@ def dcg(relevances: List[float], k: int) -> float:
     """
     return sum((relevances[i] / math.log2(i + 2)) for i in range(min(k, len(relevances))))
 
-def ndcg_at_k(relevances: List[float], k: int) -> float:
+def ndcg_at_k(relevances: Sequence[float], k: int) -> float:
     """
     Calculate Normalized Discounted Cumulative Gain at position k.
     
@@ -70,7 +70,7 @@ def ndcg_at_k(relevances: List[float], k: int) -> float:
     idcg = dcg(ideal, k)
     return 0.0 if idcg == 0 else dcg(relevances, k) / idcg
 
-def recall_at_k(relevances: List[int], k: int) -> float:
+def recall_at_k(relevances: Sequence[int], k: int) -> float:
     """
     Calculate Recall at position k.
     
@@ -96,11 +96,11 @@ def recall_at_k(relevances: List[int], k: int) -> float:
     return 0.0 if tot_rel == 0 else hit_rel / tot_rel
 
 def eval_query(
-    search_fn: Callable[[str, int], List[Dict]],
+    search_fn: Callable[[str, int], List[Dict[str, Any]]],
     query: str,
     expected_sources: Iterable[str],
     k: int = 5
-) -> Dict:
+) -> Dict[str, Any]:
     """
     Evaluate a search function on a query with expected relevant sources.
     

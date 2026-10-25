@@ -264,11 +264,12 @@ def run_retrieval_config(
 def _get_eval_id(r: dict, id_key: str | tuple[str, ...]) -> str | None:
     """Extract eval ID from result. id_key: 'source' for doc, ('chunk_id','uid') for chunk."""
     if isinstance(id_key, str):
-        return r.get(id_key)
+        v = r.get(id_key)
+        return str(v) if v is not None else None
     for k in id_key:
         v = r.get(k)
         if v:
-            return v
+            return str(v)
     return None
 
 
@@ -425,7 +426,7 @@ def run_experiments(args: argparse.Namespace) -> bool:
         query_diagnostics: dict[str, dict] = {}
 
         for effective_name, config, reranker_model_name in expanded:
-            diag = {} if (args.debug_query_id and qid == args.debug_query_id) else None
+            diag: dict[str, Any] | None = {} if (args.debug_query_id and qid == args.debug_query_id) else None
             base_name = _base_name(effective_name)
 
             # Resolve cross_encoder for rerank configs

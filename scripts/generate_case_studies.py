@@ -134,7 +134,8 @@ def load_json(path: Path) -> dict[str, Any] | None:
         return None
     try:
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+        return data if isinstance(data, dict) else None
     except (json.JSONDecodeError, OSError) as e:
         logger.warning("Failed to load %s: %s", path, e)
         return None
@@ -200,12 +201,12 @@ def _determine_focus_config(
 ) -> str:
     """Select focus config: --config-focus, or best by mean_ndcg, or C1_mmr, or first."""
     if config_focus:
-        configs = {r.get("config_name") for r in per_query if r.get("config_name")}
+        configs = {str(r.get("config_name")) for r in per_query if r.get("config_name")}
         if config_focus in configs:
             return config_focus
         # Try base_config match for expanded configs
         for c in configs:
-            if c == config_focus or (c and c.startswith(config_focus + "__")):
+            if c == config_focus or c.startswith(config_focus + "__"):
                 return c
         logger.warning("Config %s not found, falling back to best config", config_focus)
 
@@ -214,12 +215,12 @@ def _determine_focus_config(
             metrics_summary,
             key=lambda r: float(r.get("mean_ndcg_at_k") or 0),
         )
-        return str(best.get("config_name", ""))
+        return str(best.get("config_name") or "")
 
-    configs = list({r.get("config_name") for r in per_query if r.get("config_name")})
-    if "C1_mmr" in configs:
+    config_list = [c for c in {r.get("config_name") for r in per_query if r.get("config_name")} if isinstance(c, str)]
+    if "C1_mmr" in config_list:
         return "C1_mmr"
-    return configs[0] if configs else ""
+    return config_list[0] if config_list else ""
 
 
 def _select_cases(

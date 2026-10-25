@@ -7,7 +7,7 @@ Tämä asiakirja on johdettu tarkistusviennistä. Se ei korvaa alkuperäisiä tu
 - URN: URN:NBN:fi:amk-202604156494
 - Ajonaikainen commit tallennetuissa metatiedoissa: `0bf114886e687ca706f027d81fd20bd1822b07a9`
 - Commit, jossa 30 kyselyn tulostiedostot ovat puussa: `e619a3e714485ff2e6c9a833e6df317804e7e03a`
-- Sivuston vientiversio: `e8d8fa58dcbbc6d295d11f8326440d2f5e5c7a59`
+- Sivuston vientiversio: `277b83467bceb6a21960061ce32afdc210ab3fff`
 
 Sivunumerot ovat opinnäytetyön sisällysluettelon numerointia, eivät PDF-tiedoston sivupaikkoja.
 

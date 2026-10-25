@@ -109,7 +109,8 @@ def load_json(path: Path) -> dict[str, Any] | None:
         return None
     try:
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+        return data if isinstance(data, dict) else None
     except (json.JSONDecodeError, OSError) as e:
         logger.warning("Failed to load %s: %s", path, e)
         return None
