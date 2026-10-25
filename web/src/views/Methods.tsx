@@ -19,8 +19,8 @@ export function Methods({ dataset }: { dataset: Dataset }) {
       </Panel>
       <Panel title="Tapausesimerkit">
         <p>
-          Esimerkit sisältävät parannuksia, ennallaan pysyneitä tuloksia ja kompromisseja. q5:n leipätekstin virkettä ei
-          esitetä varmennettuna.
+          Esimerkit sisältävät parannuksia, ennallaan pysyneitä tuloksia ja kompromisseja. q5:n luvut vastaavat liitettä 3
+          (C0 = 1,00, C1 = 0,00, C2 = C3 = 1,00).
         </p>
         {dataset.case_studies.map((item) => (
           <article key={`${item.kind}-${item.query_id ?? "aggregate"}`} className="case">

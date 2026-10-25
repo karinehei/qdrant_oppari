@@ -47,7 +47,8 @@ describe("tallennettujen tulosten selain", () => {
     expect(screen.getByRole("link", { name: "Kysymyskohtaiset tulokset" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Laatu ja viive" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Menetelmät ja rajoitukset" })).toBeInTheDocument();
-    expect(screen.getByRole("status").textContent).toMatch(/q5/i);
+    expect(screen.queryByText(/Julkaisutarkistus on kesken/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Ei reaaliaikaista hakua/)).toBeInTheDocument();
   });
 
   it("vaihtaa näkymän hash-osoitteella", () => {

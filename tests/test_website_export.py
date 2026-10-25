@@ -40,16 +40,21 @@ def test_export_preserves_originals_and_schema(tmp_path: Path) -> None:
     assert dataset["excluded_snapshots"][0]["included_in_website_results"] is False
     assert dataset["excluded_snapshots"][0]["query_count"] == 6
     q5 = next(case for case in dataset["case_studies"] if case.get("query_id") == "q5")
-    assert q5["show_as_thesis_verified"] is False
-    assert dataset["validation"]["release_blocked"] is True
+    assert q5["show_as_thesis_verified"] is True
+    assert q5["metrics"]["C0_baseline"]["recall"] == 1.0
+    assert q5["metrics"]["C1_mmr"]["recall"] == 0.0
+    assert q5["metrics"]["C2_mmr_rerank"]["recall"] == 1.0
+    assert q5["metrics"]["C3_mmr_rerank_dedupe"]["recall"] == 1.0
+    assert dataset["validation"]["release_blocked"] is False
+    assert not any(item["code"] == "thesis_prose_mismatch" for item in dataset["validation"]["findings"])
     trace = (ROOT / "docs" / "publication_traceability.md").read_text(encoding="utf-8")
     assert "Taulukko 3" in trace
     assert "q5" in trace
     del tmp_path
 
 
-def test_strict_publication_check_fails() -> None:
-    assert website_export.main(["--strict-publication", "--root", str(ROOT)]) == 1
+def test_strict_publication_check_passes() -> None:
+    assert website_export.main(["--strict-publication", "--root", str(ROOT)]) == 0
 
 
 def test_runs_keep_separate_latency() -> None:

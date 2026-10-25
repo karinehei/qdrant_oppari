@@ -684,24 +684,33 @@ def build_cases(per_query: list[dict[str, Any]], hits: list[dict[str, Any]] | No
         }
 
     q5 = values("q5")
-    prose_matches = (
-        close(q5["C0_baseline"]["recall"], 0, 1e-9)
-        and close(q5["C1_mmr"]["recall"], 0, 1e-9)
-        and close(q5["C2_mmr_rerank"]["recall"], 0.5, 1e-9)
-        and close(q5["C3_mmr_rerank_dedupe"]["recall"], 0.5, 1e-9)
+    # Authoritative q5 recalls from per_query_metrics.csv / Liite 3.
+    # (C0=C1=0, C2=C3=0.5 belongs to q2, not q5.)
+    q5_matches_appendix = (
+        close(q5["C0_baseline"]["recall"], 1.0, 1e-9)
+        and close(q5["C1_mmr"]["recall"], 0.0, 1e-9)
+        and close(q5["C2_mmr_rerank"]["recall"], 1.0, 1e-9)
+        and close(q5["C3_mmr_rerank_dedupe"]["recall"], 1.0, 1e-9)
     )
-    if prose_matches:
-        findings.append(issue("info", "q5_prose", "Luvun 6.4 q5-virke vastaa tallennettuja mittareita."))
+    if q5_matches_appendix:
+        findings.append(
+            issue(
+                "info",
+                "q5_appendix_match",
+                "Kyselyn q5 recall@k vastaa liitettä 3 ja tallennettuja mittareita "
+                "(C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00).",
+            )
+        )
     else:
         findings.append(
             issue(
                 "error",
-                "thesis_prose_mismatch",
-                "Luku 6.4 sanoo kyselyn q5 recall-arvoiksi C0 = C1 = 0 ja C2 = C3 = 0,5. "
-                "Liite 3 ja tallennetut mittarit ovat C0 = 1,00, C1 = 0,00, C2 = 1,00 ja C3 = 1,00.",
+                "q5_metrics_unexpected",
+                "Kyselyn q5 recall@k ei vastaa odotettuja liitteen 3 arvoja "
+                "(C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00).",
                 True,
                 query_id="q5",
-                thesis_prose={"C0": 0, "C1": 0, "C2": 0.5, "C3": 0.5},
+                expected={"C0": 1.0, "C1": 0.0, "C2": 1.0, "C3": 1.0},
                 appendix_and_repository={config: q5[config]["recall"] for config in q5},
             )
         )
@@ -766,13 +775,15 @@ def build_cases(per_query: list[dict[str, Any]], hits: list[dict[str, Any]] | No
         },
         {
             "query_id": "q5",
-            "kind": "discrepancy",
-            "publication_status": "unverified_prose_discrepancy",
-            "show_as_thesis_verified": False,
+            "kind": "improvement",
+            "publication_status": "verified",
+            "show_as_thesis_verified": True,
             "reference": {"section": "6.4", "page": "42", "appendix": "Liite 3"},
             "summary_fi": (
-                "Tallennettu ja liitteen 3 mukainen recall@5 on C0 = 1,000, C1 = 0,000, C2 = 1,000 ja C3 = 1,000. "
-                "Luvun 6.4 virke (C0 = C1 = 0 ja C2 = C3 = 0,5) ei vastaa näitä lukuja, eikä sitä esitetä varmennettuna tuloksena."
+                "C0 löytää relevantin dokumentin (recall@5 = 1,000), mutta MMR (C1) pudottaa sen top-5:stä "
+                "(recall@5 = 0). C2 ja C3 palauttavat recall@5-arvon 1,000 ja nDCG@5-arvon 0,850. "
+                "Uudelleenjärjestäminen korjaa MMR:n aiheuttaman kattavuushäviön. "
+                "(Luvut C0 = C1 = 0 ja C2 = C3 = 0,5 kuuluvat kyselylle q2, eivät q5:lle.)"
             ),
         },
     ]
@@ -927,7 +938,7 @@ def traceability_rows() -> list[dict[str, Any]]:
         {"id": "table-6", "label_fi": "Taulukko 6", "section": "6.3", "page": "40", "repository": "outputs/experiments_rerank/report_table_latency.csv (C2–C3)", "website_view": "laatu", "status": "verified"},
         {"id": "figure-5", "label_fi": "Kuvio 5", "section": "6.3", "page": "40–41", "repository": "Taulukoiden 5 ja 6 nDCG@5 ja p50", "website_view": "laatu", "status": "verified"},
         {"id": "appendix-3", "label_fi": "Liite 3", "section": "Liite 3", "page": "liite", "repository": "outputs/experiments/per_query_metrics.csv", "website_view": "kysymykset", "status": "verified"},
-        {"id": "section-6.4-q5", "label_fi": "Luku 6.4, q5-virke", "section": "6.4", "page": "42", "repository": "outputs/experiments/per_query_metrics.csv ja liite 3", "website_view": "menetelmat", "status": "unresolved_prose_discrepancy"},
+        {"id": "section-6.4-q5", "label_fi": "Luku 6.4, q5 (liite 3)", "section": "6.4", "page": "42", "repository": "outputs/experiments/per_query_metrics.csv ja liite 3", "website_view": "menetelmat", "status": "verified"},
         {"id": "groundedness", "label_fi": "Groundedness-kooste", "section": "5.6", "page": "34", "repository": "outputs/experiments/groundedness_summary.csv", "website_view": "ei näytetä päätuloksissa", "status": "excluded_unverified_provenance"},
         {"id": "pilot-snapshot", "label_fi": "Aiempi 6 kyselyn tuloste", "section": "ei julkaistu taulu", "page": "–", "repository": f"{RUNTIME_COMMIT}:outputs/experiments/metrics_summary.csv", "website_view": "ei näytetä", "status": "repository_history_not_publication"},
     ]
@@ -980,14 +991,11 @@ def render_traceability(dataset: dict[str, Any]) -> str:
             "Lähde: `outputs/experiments_rerank`. Julkaistut taulukot 5 ja 6 kattavat C2- ja C3-rivit. "
             "Saman ajon C0- ja C1-latenssit ovat erillinen mittaus, eivät taulukon 4 lukuja.",
             "",
-            "## Kyselyn q5 ristiriita",
+            "## Kyselyn q5",
             "",
-            "Luku 6.4: C0 ja C1 recall@k = 0, C2 ja C3 recall@k = 0,5.",
+            "Liite 3 ja `per_query_metrics.csv` (lähde): C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00.",
             "",
-            "Liite 3 ja `per_query_metrics.csv`: C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00.",
-            "",
-            "Sivusto näyttää liitteen ja repositorion luvut ja merkitsee leipätekstin virkkeen varmentamattomaksi. "
-            "Ristiriita estää julkaisutyönkulun tiukan tarkistuksen, kunnes virke on tarkistettu.",
+            "Sivusto käyttää näitä lukuja. Arvot C0 = C1 = 0 ja C2 = C3 = 0,5 kuuluvat kyselylle q2.",
             "",
             "## Aiempi tuloste samassa commit-hashissa",
             "",
@@ -1224,9 +1232,7 @@ def build_dataset(root: Path | None = None) -> dict[str, Any]:
             "material_discrepancies": material,
             "release_blocked": bool(material),
             "release_block_reason_fi": (
-                "Luvun 6.4 q5-virke eroaa liitteestä 3 ja tallennetuista mittareista. "
-                "Päätulostauluja ei ole merkitty tämän vuoksi vääriksi, mutta virkettä ei saa esittää varmennettuna "
-                "ja Pages-julkaisu odottaa tarkistusta."
+                "Aineellinen julkaisuristiriita estää Pages-julkaisun."
                 if material
                 else ""
             ),

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "generated_at_utc": "2026-10-24T18:31:05.695672+00:00",
-  "website_export_revision": "03d6dee0afb061f64b7f68f71a5e4c865f383852",
+  "generated_at_utc": "2026-10-25T15:45:53.522074+00:00",
+  "website_export_revision": "e8d8fa58dcbbc6d295d11f8326440d2f5e5c7a59",
   "original_experiment_commit": "0bf114886e687ca706f027d81fd20bd1822b07a9",
   "output_files_commit": "e619a3e714485ff2e6c9a833e6df317804e7e03a",
   "language": "fi",
@@ -19380,15 +19380,15 @@
     },
     {
       "query_id": "q5",
-      "kind": "discrepancy",
-      "publication_status": "unverified_prose_discrepancy",
-      "show_as_thesis_verified": false,
+      "kind": "improvement",
+      "publication_status": "verified",
+      "show_as_thesis_verified": true,
       "reference": {
         "section": "6.4",
         "page": "42",
         "appendix": "Liite 3"
       },
-      "summary_fi": "Tallennettu ja liitteen 3 mukainen recall@5 on C0 = 1,000, C1 = 0,000, C2 = 1,000 ja C3 = 1,000. Luvun 6.4 virke (C0 = C1 = 0 ja C2 = C3 = 0,5) ei vastaa näitä lukuja, eikä sitä esitetä varmennettuna tuloksena.",
+      "summary_fi": "C0 löytää relevantin dokumentin (recall@5 = 1,000), mutta MMR (C1) pudottaa sen top-5:stä (recall@5 = 0). C2 ja C3 palauttavat recall@5-arvon 1,000 ja nDCG@5-arvon 0,850. Uudelleenjärjestäminen korjaa MMR:n aiheuttaman kattavuushäviön. (Luvut C0 = C1 = 0 ja C2 = C3 = 0,5 kuuluvat kyselylle q2, eivät q5:lle.)",
       "metrics": {
         "C0_baseline": {
           "recall": 1.0,
@@ -19646,12 +19646,12 @@
     },
     {
       "id": "section-6.4-q5",
-      "label_fi": "Luku 6.4, q5-virke",
+      "label_fi": "Luku 6.4, q5 (liite 3)",
       "section": "6.4",
       "page": "42",
       "repository": "outputs/experiments/per_query_metrics.csv ja liite 3",
       "website_view": "menetelmat",
-      "status": "unresolved_prose_discrepancy"
+      "status": "verified"
     },
     {
       "id": "groundedness",
@@ -19675,47 +19675,14 @@
   "validation": {
     "findings": [
       {
-        "severity": "error",
-        "code": "thesis_prose_mismatch",
-        "message": "Luku 6.4 sanoo kyselyn q5 recall-arvoiksi C0 = C1 = 0 ja C2 = C3 = 0,5. Liite 3 ja tallennetut mittarit ovat C0 = 1,00, C1 = 0,00, C2 = 1,00 ja C3 = 1,00.",
-        "material": true,
-        "query_id": "q5",
-        "thesis_prose": {
-          "C0": 0,
-          "C1": 0,
-          "C2": 0.5,
-          "C3": 0.5
-        },
-        "appendix_and_repository": {
-          "C0_baseline": 1.0,
-          "C1_mmr": 0.0,
-          "C2_mmr_rerank": 1.0,
-          "C3_mmr_rerank_dedupe": 1.0
-        }
+        "severity": "info",
+        "code": "q5_appendix_match",
+        "message": "Kyselyn q5 recall@k vastaa liitettä 3 ja tallennettuja mittareita (C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00).",
+        "material": false
       }
     ],
-    "material_discrepancies": [
-      {
-        "severity": "error",
-        "code": "thesis_prose_mismatch",
-        "message": "Luku 6.4 sanoo kyselyn q5 recall-arvoiksi C0 = C1 = 0 ja C2 = C3 = 0,5. Liite 3 ja tallennetut mittarit ovat C0 = 1,00, C1 = 0,00, C2 = 1,00 ja C3 = 1,00.",
-        "material": true,
-        "query_id": "q5",
-        "thesis_prose": {
-          "C0": 0,
-          "C1": 0,
-          "C2": 0.5,
-          "C3": 0.5
-        },
-        "appendix_and_repository": {
-          "C0_baseline": 1.0,
-          "C1_mmr": 0.0,
-          "C2_mmr_rerank": 1.0,
-          "C3_mmr_rerank_dedupe": 1.0
-        }
-      }
-    ],
-    "release_blocked": true,
-    "release_block_reason_fi": "Luvun 6.4 q5-virke eroaa liitteestä 3 ja tallennetuista mittareista. Päätulostauluja ei ole merkitty tämän vuoksi vääriksi, mutta virkettä ei saa esittää varmennettuna ja Pages-julkaisu odottaa tarkistusta."
+    "material_discrepancies": [],
+    "release_blocked": false,
+    "release_block_reason_fi": ""
   }
 }

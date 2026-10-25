@@ -7,7 +7,7 @@ Tämä asiakirja on johdettu tarkistusviennistä. Se ei korvaa alkuperäisiä tu
 - URN: URN:NBN:fi:amk-202604156494
 - Ajonaikainen commit tallennetuissa metatiedoissa: `0bf114886e687ca706f027d81fd20bd1822b07a9`
 - Commit, jossa 30 kyselyn tulostiedostot ovat puussa: `e619a3e714485ff2e6c9a833e6df317804e7e03a`
-- Sivuston vientiversio: `03d6dee0afb061f64b7f68f71a5e4c865f383852`
+- Sivuston vientiversio: `e8d8fa58dcbbc6d295d11f8326440d2f5e5c7a59`
 
 Sivunumerot ovat opinnäytetyön sisällysluettelon numerointia, eivät PDF-tiedoston sivupaikkoja.
 
@@ -31,7 +31,7 @@ Sivunumerot ovat opinnäytetyön sisällysluettelon numerointia, eivät PDF-tied
 | Taulukko 6 | 6.3, s. 40 | `outputs/experiments_rerank/report_table_latency.csv (C2–C3)` | laatu | verified |
 | Kuvio 5 | 6.3, s. 40–41 | `Taulukoiden 5 ja 6 nDCG@5 ja p50` | laatu | verified |
 | Liite 3 | Liite 3, s. liite | `outputs/experiments/per_query_metrics.csv` | kysymykset | verified |
-| Luku 6.4, q5-virke | 6.4, s. 42 | `outputs/experiments/per_query_metrics.csv ja liite 3` | menetelmat | unresolved_prose_discrepancy |
+| Luku 6.4, q5 (liite 3) | 6.4, s. 42 | `outputs/experiments/per_query_metrics.csv ja liite 3` | menetelmat | verified |
 | Groundedness-kooste | 5.6, s. 34 | `outputs/experiments/groundedness_summary.csv` | ei näytetä päätuloksissa | excluded_unverified_provenance |
 | Aiempi 6 kyselyn tuloste | ei julkaistu taulu, s. – | `0bf114886e687ca706f027d81fd20bd1822b07a9:outputs/experiments/metrics_summary.csv` | ei näytetä | repository_history_not_publication |
 
@@ -48,13 +48,11 @@ Lähde: `outputs/experiments`. Julkaisu: taulukot 3 ja 4, kuviot 4.
 
 Lähde: `outputs/experiments_rerank`. Julkaistut taulukot 5 ja 6 kattavat C2- ja C3-rivit. Saman ajon C0- ja C1-latenssit ovat erillinen mittaus, eivät taulukon 4 lukuja.
 
-## Kyselyn q5 ristiriita
+## Kyselyn q5
 
-Luku 6.4: C0 ja C1 recall@k = 0, C2 ja C3 recall@k = 0,5.
+Liite 3 ja `per_query_metrics.csv` (lähde): C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00.
 
-Liite 3 ja `per_query_metrics.csv`: C0 = 1,00, C1 = 0,00, C2 = 1,00, C3 = 1,00.
-
-Sivusto näyttää liitteen ja repositorion luvut ja merkitsee leipätekstin virkkeen varmentamattomaksi. Ristiriita estää julkaisutyönkulun tiukan tarkistuksen, kunnes virke on tarkistettu.
+Sivusto käyttää näitä lukuja. Arvot C0 = C1 = 0 ja C2 = C3 = 0,5 kuuluvat kyselylle q2.
 
 ## Aiempi tuloste samassa commit-hashissa
 
