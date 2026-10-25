@@ -1,0 +1,209 @@
+:root {
+  color: #172033;
+  background: #f6f7f9;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  --navy: #0f2744;
+  --blue: #1f4e79;
+  --amber: #b86e00;
+  --line: #d5dbe3;
+  --card: #ffffff;
+  --muted: #5c6b7a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+}
+
+a { color: var(--blue); }
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: 0.5rem;
+  top: -4rem;
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  z-index: 2;
+}
+
+.skip:focus { top: 0.5rem; }
+
+.site-header {
+  background: var(--navy);
+  color: #f7f4ee;
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.site-header a { color: #fff; text-decoration-thickness: 2px; }
+
+.eyebrow { margin: 0; font-size: 1.35rem; font-weight: 650; }
+
+.statement {
+  display: inline-block;
+  margin: 0.75rem 0 1rem;
+  padding: 0.35rem 0.6rem;
+  background: var(--amber);
+  color: #1b1408;
+  font-weight: 650;
+}
+
+.site-header ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  padding: 0 0 0.75rem;
+  list-style: none;
+}
+
+.site-header a[aria-current="page"] {
+  border-bottom: 3px solid var(--amber);
+}
+
+.blocker, .notice, .empty {
+  margin: 1rem auto;
+  max-width: 1120px;
+  padding: 0.75rem 1rem;
+  background: #fff4df;
+  border-left: 4px solid var(--amber);
+}
+
+main, .site-footer {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 1rem 1.1rem;
+  margin: 1rem 0;
+}
+
+.lead { font-size: 1.15rem; }
+
+.meta, .site-footer { color: var(--muted); }
+
+.site-footer {
+  padding-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.steps { padding-left: 1.2rem; }
+
+label { display: grid; gap: 0.25rem; font-weight: 650; }
+
+input, select, button {
+  font: inherit;
+  color: inherit;
+  background: #fff;
+  border: 1px solid #8ea0b5;
+  border-radius: 4px;
+  padding: 0.45rem 0.55rem;
+}
+
+button {
+  background: var(--navy);
+  color: #fff;
+  cursor: pointer;
+}
+
+.filters, .pair, .chart-grid, .compare, .question-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.filters, .pair { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: end; }
+
+.chart-grid, .compare, .question-layout { grid-template-columns: 1fr 1fr; }
+
+.question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 36rem;
+  overflow: auto;
+}
+
+.question-list button {
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  color: inherit;
+  margin-bottom: 0.4rem;
+}
+
+.question-list button[aria-pressed="true"] {
+  border-color: var(--navy);
+  box-shadow: inset 4px 0 0 var(--amber);
+}
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0 1rem;
+}
+
+caption { text-align: left; font-weight: 650; margin-bottom: 0.35rem; }
+
+th, td {
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  padding: 0.4rem 0.45rem;
+  vertical-align: top;
+}
+
+th { background: #eef3f8; }
+
+.chart { margin: 0.5rem 0 1rem; }
+
+.chart svg { width: 100%; height: auto; }
+
+.chart-label, .chart-value, .chart-axis { font-size: 12px; fill: #172033; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.legend li { display: flex; gap: 0.4rem; align-items: center; }
+
+.pattern-source { position: absolute; width: 0; height: 0; }
+
+.hit-column {
+  border: 1px solid var(--line);
+  padding: 0.75rem;
+}
+
+.hit-column ol { padding-left: 1.2rem; }
+
+.badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.badge.ok { background: #e7f0e4; }
+.badge.warn { background: #fff4df; }
+
+@media (max-width: 800px) {
+  .chart-grid, .compare, .question-layout { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}

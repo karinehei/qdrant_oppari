@@ -59,6 +59,10 @@ env/
 # data/raw/
 # data/processed/
 
+# Website
+web/node_modules/
+web/dist/
+
 # OS
 .DS_Store
 Thumbs.db

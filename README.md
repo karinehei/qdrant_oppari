@@ -14,6 +14,7 @@ Qdrant-pohjainen RAG-tutkimusprototyyppi retrieval-ablaatioiden arviointiin suom
 - [Build Report Tables](#build-report-tables)
 - [Reproducibility](#reproducibility)
 - [Limitations](#limitations)
+- [Interaktiivinen tulosesittely](#interaktiivinen-tulosesittely)
 - [Demo and CLI Usage (legacy / development)](#demo-and-cli-usage-legacy--development)
 - [Installation](#installation)
 - [License](#license)
@@ -283,6 +284,51 @@ Ympäristötiedot dokumentoivat Python-version, pakettiversiot (qdrant-client, s
 - **Retrieval vs generointi**: recall@k ja nDCG@k mittavat relevanssia; groundedness tai vastaavuus totuuteen ei ole sama asia
 
 ---
+
+## Interaktiivinen tulosesittely
+
+Tämä repositorio sisältää julkaistun opinnäytetyön tutkimuskoodin ja tallennetut tulokset:
+
+Heinonen, Karine (2026). *Hakustrategioiden vaikutus suomenkielisen RAG-järjestelmän tiedonhaun laatuun ja suorituskykyyn.* LAB-ammattikorkeakoulu.  
+https://www.theseus.fi/items/4c5b8d64-c921-47f4-9c9a-52866778055a
+
+Hakemiston `web/` sivusto on julkaisun interaktiivinen tulosesittely. Se näyttää vain tallennettuja tuloksia. Se ei ole chatbot, ei käynnistä Qdrantia eikä laske uusia hakuja. Näkyvä raja on: “Opinnäytetyön tallennetut tutkimustulokset · Ei reaaliaikaista hakua”.
+
+Sivusto ei ole vielä julkaistu. Odotettu osoite Pages-käyttöönoton jälkeen on https://karinehei.github.io/qdrant_oppari/
+
+### Paikallinen vienti, build ja esikatselu
+
+Komennot ajetaan repositorion juuresta. Ne toimivat Windowsissa ja Unix-kuoressa saman npm-skriptin kautta.
+
+```bash
+python scripts/website_export.py
+cd web
+npm ci
+npm test
+npm run build:demo
+npm run preview:demo
+```
+
+Esikatselu käyttää samaa polkua kuin GitHub Pages: http://127.0.0.1:4173/qdrant_oppari/
+
+`python scripts/website_export.py --strict-publication` palauttaa virhekoodin, jos aineellinen julkaisuristiriita on auki. Tavallinen vienti kirjoittaa silti paikallisen aineiston. Vienti ei muuta `outputs/`- tai `data/annotations/`-tiedostoja.
+
+### Jäljitettävyys ja validointi
+
+- `docs/publication_traceability.md` yhdistää julkaisun taulun tai kuvion, repositorion tiedoston ja sivuston näkymän.
+- Tarkistus vertaa kyselykohtaisia mittareita, koosteita ja raporttitauluja sekä laskee diagnostisesti recall@5- ja nDCG@5-arvot tallennetuista osumista ja nykyisistä annotaatioista. Lukuja ei kirjoiteta takaisin.
+- Pääablaatio (`outputs/experiments`) ja uudelleenjärjestäjävertailu (`outputs/experiments_rerank`) pidetään erillisinä etenkin latenssissa.
+- Lähdedokumenttien tekstiä ja PDF-tiedostoja ei julkaista. Näyttönimet on johdettu tiedostonimistä, eikä niille keksitä Theseus-osoitteita.
+
+### Tulevat kokeet
+
+Uudet ajot kirjoitetaan omaan tuloshakemistoonsa. Niitä ei lisätä tämän julkaistun aineiston `outputs/experiments`- tai `outputs/experiments_rerank`-tiedostoihin eikä sivuston datasettiin ilman erillistä julkaisupäätöstä.
+
+### GitHub Pages
+
+Workflow `.github/workflows/pages.yml` käynnistyy vain käsin (`workflow_dispatch`). Se validoi aineiston, ajaa kevyen viennin, testit ja `web/`-buildin. Se ei asenna mallipinoa, käynnistä Qdrantia eikä aja hakukokeita. Artefaktina julkaistaan vain `web/dist`.
+
+Pages otetaan käyttöön repositorion asetuksista lähteellä GitHub Actions. Tätä workflowta ei ole käynnistetty, eikä sivustoa ole julkaistu. Niin kauan kuin `website_export.py --strict-publication` epäonnistuu, julkaisutyö pysähtyy ennen lähetystä.
 
 ## Demo and CLI Usage (legacy / development)
 
